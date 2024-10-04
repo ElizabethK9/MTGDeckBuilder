@@ -3,6 +3,14 @@
 [Elizabeth P.](https://github.com/ElizabethK9)   
 [Cameron W.](https://github.com/cameronwhite4121)
 ## Goal Of The Site
+The MTGDeckBuilder site will be helpful to anyone that plays the card game, Magic the Gathering.   
+Planned features that will be included once the website is fully complete:
+- Keeping track of a user's cards and the price of them
+- Creating a managing decks for multiple formats
+- Sharing decks with others on a forum
+- Life tracker
+- Dice roller to determine turn order
+
 ## Helpful Links
 [MTG Api For DotNet](https://github.com/MagicTheGathering/mtg-sdk-dotnet)   
 [Api Documentation](https://docs.magicthegathering.io/)   
