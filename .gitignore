@@ -5,6 +5,7 @@
 
 # Please ignore bin file changes
 /bin/
+/obj/
 
 # User-specific files
 *.rsuser
