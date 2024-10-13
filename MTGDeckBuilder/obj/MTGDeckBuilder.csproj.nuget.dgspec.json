@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cjw05\\Desktop\\MTGDeckBuilder\\MTGDeckBuilder\\MTGDeckBuilder.csproj": {}
+    "G:\\CPTC Classwork\\CPW221-AdvancedDotNetWeb\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cjw05\\Desktop\\MTGDeckBuilder\\MTGDeckBuilder\\MTGDeckBuilder.csproj": {
+    "G:\\CPTC Classwork\\CPW221-AdvancedDotNetWeb\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cjw05\\Desktop\\MTGDeckBuilder\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
+        "projectUniqueName": "G:\\CPTC Classwork\\CPW221-AdvancedDotNetWeb\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
         "projectName": "MTGDeckBuilder",
-        "projectPath": "C:\\Users\\cjw05\\Desktop\\MTGDeckBuilder\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
+        "projectPath": "G:\\CPTC Classwork\\CPW221-AdvancedDotNetWeb\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
         "packagesPath": "C:\\Users\\cjw05\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cjw05\\Desktop\\MTGDeckBuilder\\MTGDeckBuilder\\obj\\",
+        "outputPath": "G:\\CPTC Classwork\\CPW221-AdvancedDotNetWeb\\TeamProject\\MTGDeckBuilder\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\cjw05\\AppData\\Roaming\\NuGet\\NuGet.Config",
