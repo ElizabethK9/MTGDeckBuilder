@@ -1,0 +1,51 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\CPTC Classwork\\CPW221-AdvancedDotNetWeb\\TeamProject\\MTGDeckBuilder\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{91DFB594-903F-485F-A896-1C153922F74E}|MTGDeckBuilder\\MTGDeckBuilder.csproj|g:\\cptc classwork\\cpw221-advanceddotnetweb\\teamproject\\mtgdeckbuilder\\mtgdeckbuilder\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{91DFB594-903F-485F-A896-1C153922F74E}|MTGDeckBuilder\\MTGDeckBuilder.csproj|solutionrelative:mtgdeckbuilder\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "G:\\CPTC Classwork\\CPW221-AdvancedDotNetWeb\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder\\appsettings.json",
+              "RelativeDocumentMoniker": "MTGDeckBuilder\\appsettings.json",
+              "ToolTip": "G:\\CPTC Classwork\\CPW221-AdvancedDotNetWeb\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder\\appsettings.json",
+              "RelativeToolTip": "MTGDeckBuilder\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAABQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-13T02:16:10.043Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 174,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
