@@ -4557,11 +4557,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
+      "projectUniqueName": "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
       "projectName": "MTGDeckBuilder",
-      "projectPath": "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
+      "projectPath": "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
       "packagesPath": "C:\\Users\\cjw05\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder\\obj\\",
+      "outputPath": "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\cjw05\\AppData\\Roaming\\NuGet\\NuGet.Config",
