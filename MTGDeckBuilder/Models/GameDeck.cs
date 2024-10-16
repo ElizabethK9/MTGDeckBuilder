@@ -33,5 +33,17 @@ namespace MTGDeckBuilder.Models
         /// </summary>
         public int DeckPrice { get; set; }
 
+        /// <summary>
+        /// Constructor for a GameDeck object (not including price)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="deckName"></param>
+        /// <param name="deckFormat"></param>
+        public GameDeck(int id, string deckName, string deckFormat) 
+        {
+            this.Id = id;
+            this.DeckName = deckName;
+            this.DeckFormat = deckFormat;
+        }
     }
 }

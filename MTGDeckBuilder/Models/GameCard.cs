@@ -74,7 +74,7 @@ namespace MTGDeckBuilder.Models
         public int CollectorNumber { get; set; }
 
         /// <summary>
-        /// Constructor for the game card, not including price.
+        /// Constructor for the game card (not including price)
         /// </summary>
         /// <param name="cardMID"></param>
         /// <param name="cardName"></param>
