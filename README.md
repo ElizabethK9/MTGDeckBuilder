@@ -17,4 +17,5 @@ Planned features that will be included once the website is fully complete:
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet)   
 [ReadMe Template](https://github.com/othneildrew/Best-README-Template)     
 [Wizards Of The Coast Fan Content Policy](https://company.wizards.com/en/legal/fancontentpolicy)   
-[Text Content Api](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-text?tabs=visual-studio%2Cwindows&pivots=programming-language-csharp)
+[Text Content Api](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-text?tabs=visual-studio%2Cwindows&pivots=programming-language-csharp)   
+[Bootstrap Docs](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
