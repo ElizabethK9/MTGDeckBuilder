@@ -1,0 +1,82 @@
+﻿@model MTGDeckBuilder.Models.GameCard
+
+@{
+    ViewData["Title"] = "View Information";
+}
+
+@if(Model != null)
+{
+    <div>
+        <h4>GameCard</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CardMID)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CardMID)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CardName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CardName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CardType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CardType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CardSubtype)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CardSubtype)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ManaCost)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ManaCost)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CardSet)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CardSet)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CardPrice)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CardPrice)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CreaturePower)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CreaturePower)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CreatureToughness)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CreatureToughness)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CollectorNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CollectorNumber)
+            </dd>
+        </dl>
+    </div>
+}
+else
+{
+    <p> Card could not be found</p>    
+}
+<div>
+    <a asp-action="CardSearch">Back to List</a>
+</div>

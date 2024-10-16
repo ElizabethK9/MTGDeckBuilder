@@ -1,0 +1,81 @@
+﻿@model MTGDeckBuilder.Models.GameCard
+
+@{
+    ViewData["Title"] = "CardSearch";
+}
+
+<h1>Card Search</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CardSearch">
+            <div class="form-group">
+                <label asp-for="CardMID" class="control-label"></label>
+                <input asp-for="CardMID" class="form-control" />
+                <span asp-validation-for="CardMID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CardName" class="control-label"></label>
+                <input asp-for="CardName" class="form-control" />
+                <span asp-validation-for="CardName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CardType" class="control-label"></label>
+                <input asp-for="CardType" class="form-control" />
+                <span asp-validation-for="CardType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CardSubtype" class="control-label"></label>
+                <input asp-for="CardSubtype" class="form-control" />
+                <span asp-validation-for="CardSubtype" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManaCost" class="control-label"></label>
+                <input asp-for="ManaCost" class="form-control" />
+                <span asp-validation-for="ManaCost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CardSet" class="control-label"></label>
+                <input asp-for="CardSet" class="form-control" />
+                <span asp-validation-for="CardSet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CardPrice" class="control-label"></label>
+                <input asp-for="CardPrice" class="form-control" />
+                <span asp-validation-for="CardPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CardPrice" class="control-label"></label>
+                <input asp-for="CardPrice" class="form-control" />
+                <span asp-validation-for="CardPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreaturePower" class="control-label"></label>
+                <input asp-for="CreaturePower" class="form-control" />
+                <span asp-validation-for="CreaturePower" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatureToughness" class="control-label"></label>
+                <input asp-for="CreatureToughness" class="form-control" />
+                <span asp-validation-for="CreatureToughness" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CollectorNumber" class="control-label"></label>
+                <input asp-for="CollectorNumber" class="form-control" />
+                <span asp-validation-for="CollectorNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="CardSearch">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
