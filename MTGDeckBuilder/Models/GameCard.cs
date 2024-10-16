@@ -14,26 +14,26 @@ namespace MTGDeckBuilder.Models
         /// in Magic that refers to each cards printed order from each set.
         /// </summary>
         [Key]
-        public int cardMID { get; set; }
+        public int CardMID { get; set; }
 
         /// <summary>
         /// Fullname of the card
         /// </summary>
         [Required]
-        public string cardName { get; set; }
+        public string CardName { get; set; }
 
         /// <summary>
         /// Card type represents what kind of card it is. Magic has many card types like
         /// creatures, instants, sorceries, enchantments and more.
         /// </summary>
         [Required]
-        public string cardType { get; set; }
+        public string CardType { get; set; }
 
         /// <summary>
         /// Several cards have a subtype. Creatures are the best example of this with creature
         /// being the main type, and humans or beasts being its subtype.
         /// </summary>
-        public string cardSubtype { get; set; }
+        public string CardSubtype { get; set; }
 
         /// <summary>
         /// All cards have a converted mana cost (referred to as CMC a lot of times). The cost could include any combination
@@ -41,7 +41,7 @@ namespace MTGDeckBuilder.Models
         /// that don't apppear to have a mana cost, like tokens, which have a hidden mana cost of 0.
         /// </summary>
         [Required]
-        public string manaCost { get; set; }
+        public string ManaCost { get; set; }
 
         /// <summary>
         /// A card's set is what set the card is released in. There are an abundance of card reprints in later sets,
@@ -50,31 +50,31 @@ namespace MTGDeckBuilder.Models
         /// strong since.
         /// </summary>
         [Required]
-        public string cardSet { get; set; }
+        public string CardSet { get; set; }
 
         /// <summary>
         /// Will be implemented in the future when the site is more fleshed out.
         /// </summary>
-        public int cardPrice { get; set; }
+        public int CardPrice { get; set; }
 
         /// <summary>
         /// Int value for the attacking power of the card if it's a creature. Can include 0.
         /// </summary>
-        public int creaturePower { get; set; }
+        public int CreaturePower { get; set; }
 
         /// <summary>
         /// Int value for the defensive power of the card if it's a creature. Can include 0.
         /// </summary>
-        public int creatureToughness { get; set; }
+        public int CreatureToughness { get; set; }
 
         /// <summary>
         /// Unlinke the mulitverse id, collector number represents the order the
         /// card was printed from the specific set
         /// </summary>
-        public int collectorNumber { get; set; }
+        public int CollectorNumber { get; set; }
 
         /// <summary>
-        /// Constructor for the game card, not including price.
+        /// Constructor for the game card (not including price)
         /// </summary>
         /// <param name="cardMID"></param>
         /// <param name="cardName"></param>
@@ -89,15 +89,15 @@ namespace MTGDeckBuilder.Models
                         string cardSubtype, string manaCost, string cardSet,
                         int creaturePower, int creatureToughness, int collectorNumber)
         {
-            this.cardMID = cardMID;
-            this.cardName = cardName;
-            this.cardType = cardType;
-            this.cardSubtype = cardSubtype;
-            this.manaCost = manaCost;
-            this.cardSet = cardSet;
-            this.creaturePower = creaturePower;
-            this.creatureToughness = creatureToughness;
-            this.collectorNumber = collectorNumber;
+            this.CardMID = cardMID;
+            this.CardName = cardName;
+            this.CardType = cardType;
+            this.CardSubtype = cardSubtype;
+            this.ManaCost = manaCost;
+            this.CardSet = cardSet;
+            this.CreaturePower = creaturePower;
+            this.CreatureToughness = creatureToughness;
+            this.CollectorNumber = collectorNumber;
         }
     }
 }
