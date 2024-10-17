@@ -38,11 +38,44 @@ namespace MTGDeckBuilder.Controllers
             var result = await service.Where(x => x.Name, cardSearch)
                                       .AllAsync();
 
-            // Card search result values         
-            string cardImageLink = result.Value[0].ImageUrl.ToString();
+            // Card search result values
+
+            var firstResult = result.Value[0];
+
+            string multiverseIdString = firstResult.MultiverseId;
+            int multiverseId = Convert.ToInt32(multiverseIdString);
+
+            string cardName = firstResult.Name;
+
+            string cardType = firstResult.Type;
+
+            string cardSubtype;
+            try
+            {
+                cardSubtype = firstResult.SubTypes.FirstOrDefault() ?? "N/A";
+            }
+            catch (Exception ex)
+            {
+                cardSubtype = "N/A";
+            }
+
+            string manaCost = firstResult.Cmc.ToString();
+
+            string cardSet = firstResult.Set;
+
+            int creaturePower = Convert.ToInt32(firstResult.Power);
+
+            int creatureToughness = Convert.ToInt32(firstResult.Toughness);
+
+            int collectorNumber = Convert.ToInt32(firstResult.Number);
+
+            string cardImageURL = firstResult.ImageUrl.ToString();
 
             // Pass image url as a cardName object
-            GameCard card = new GameCard(cardImageLink);
+            GameCard card = new GameCard(multiverseId, cardName, cardType,
+                                         cardSubtype, manaCost, cardSet,
+                                         creaturePower, creatureToughness, collectorNumber,
+                                         cardImageURL);
 
             return View(card);
         }

@@ -69,6 +69,8 @@ namespace MTGDeckBuilder.Models
         /// </summary>
         public int? CollectorNumber { get; set; }
 
+        public string? cardImageURL { get; set; }
+
         // Parameterless constructor
         public GameCard() { }
 
@@ -81,14 +83,14 @@ namespace MTGDeckBuilder.Models
         /// <param name="cardSubtype"></param>
         /// <param name="manaCost"></param>
         /// <param name="cardSet"></param>
-        /// <param name="cardPrice"></param>
         /// <param name="creaturePower"></param>
         /// <param name="creatureToughness"></param>
         /// <param name="collectorNumber"></param>
+        /// <param name="cardImageURL"></param>
         public GameCard(int cardMID, string cardName, string cardType,
                         string cardSubtype, string manaCost, string cardSet,
-                        int cardPrice, int creaturePower, int creatureToughness, 
-                        int collectorNumber)
+                        int creaturePower, int creatureToughness, int collectorNumber,
+                        string cardImageURL)
         {
             this.CardMID = cardMID;
             this.CardName = cardName;
@@ -96,10 +98,10 @@ namespace MTGDeckBuilder.Models
             this.CardSubtype = cardSubtype;
             this.ManaCost = manaCost;
             this.CardSet = cardSet;
-            this.CardPrice = cardPrice;
             this.CreaturePower = creaturePower;
             this.CreatureToughness = creatureToughness;
             this.CollectorNumber = collectorNumber;
+            this.cardImageURL = cardImageURL;
         }
 
         public GameCard(string cardName) 
