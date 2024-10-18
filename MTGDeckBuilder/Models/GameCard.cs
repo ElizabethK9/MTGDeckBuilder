@@ -104,6 +104,10 @@ namespace MTGDeckBuilder.Models
             this.cardImageURL = cardImageURL;
         }
 
+        /// <summary>
+        /// Constructor for card search
+        /// </summary>
+        /// <param name="cardName"></param>
         public GameCard(string cardName) 
         {
             this.CardName=cardName;
