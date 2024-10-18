@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using MtgApiManager.Lib.Service;
 using MTGDeckBuilder.Models;
-
+#nullable disable
 namespace MTGDeckBuilder.Controllers
 {
     public class CardController : Controller
@@ -28,7 +28,7 @@ namespace MTGDeckBuilder.Controllers
         public async Task<ActionResult> ViewCard()
         {
             // User entered string for card search
-            String cardSearch = TempData["Card"] as String;
+            string cardSearch = TempData["Card"] as string;
 
             // Initilize MTG framework
             IMtgServiceProvider serviceProvider = new MtgServiceProvider();
@@ -50,11 +50,11 @@ namespace MTGDeckBuilder.Controllers
             string cardType = firstResult.Type;
 
             string cardSubtype;
-            try
+            if (firstResult.SubTypes.FirstOrDefault() != null)
             {
-                cardSubtype = firstResult.SubTypes.FirstOrDefault() ?? "N/A";
+                cardSubtype = firstResult.SubTypes.FirstOrDefault();
             }
-            catch (Exception ex)
+            else
             {
                 cardSubtype = "N/A";
             }
