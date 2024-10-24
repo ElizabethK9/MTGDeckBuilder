@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder.csproj": {}
+    "D:\\.net\\MTG\\MTGDeckBuilder\\MTGDeckBuilder.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder.csproj": {
+    "D:\\.net\\MTG\\MTGDeckBuilder\\MTGDeckBuilder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
+        "projectUniqueName": "D:\\.net\\MTG\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
         "projectName": "MTGDeckBuilder",
-        "projectPath": "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
-        "packagesPath": "C:\\Users\\cjw05\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cjw05\\Desktop\\TeamProject\\MTGDeckBuilder\\obj\\",
+        "projectPath": "D:\\.net\\MTG\\MTGDeckBuilder\\MTGDeckBuilder.csproj",
+        "packagesPath": "C:\\Users\\Lizzy_K9\\.nuget\\packages\\",
+        "outputPath": "D:\\.net\\MTG\\MTGDeckBuilder\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\cjw05\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lizzy_K9\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -104,7 +108,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
