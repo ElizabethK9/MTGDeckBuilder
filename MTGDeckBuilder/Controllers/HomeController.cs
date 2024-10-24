@@ -15,6 +15,7 @@ namespace MTGDeckBuilder.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.PageTitle = "MTGDeckBuilder";
             return View();
         }
 
