@@ -17,18 +17,12 @@ html {
   min-height: 100%;
 }
 
-body {
-<<<<<<< HEAD
-    margin-bottom: 60px;
-    background-color: #5c554d;
-}
-=======
-  margin-bottom: 60px;
-}
-
 /* This is the index.cshtml css*/
-body{
+body {
+    margin-bottom: 60px;
     background-image: url('/sdf.webp');
+    background-size: cover;
+    background-position: center;
 }
 
 .welcome h1 {
@@ -42,22 +36,24 @@ body{
     text-align: center;
     margin-top: 50px;
 }
+
 #One{
     color: lightgreen;
     margin-top: 100px;
 }
+
 #Two{
     color: lightcoral;
     margin-top: 50px;
 }
+
 #Three{
     color: lightcyan;
     margin-top: 50px;
 }
+
 .warning{
     color: darkgoldenrod;
     text-align: center;
     margin-top: 200px;
-
 }
->>>>>>> c65c7c63e79770e8ac8d4c38640ff04b4b10e4ed
