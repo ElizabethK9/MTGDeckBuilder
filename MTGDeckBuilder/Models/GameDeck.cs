@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace MTGDeckBuilder.Models
 {
@@ -32,6 +33,16 @@ namespace MTGDeckBuilder.Models
         /// Price of the deck determined by the collective value of each card within the deck.
         /// </summary>
         public int DeckPrice { get; set; }
+
+        /// <summary>
+        /// Id of the user that made the deck
+        /// </summary>
+        public IdentityUser UserID { get; set; }
+
+        /// <summary>
+        /// Navigation property for the user.
+        /// </summary>
+        public virtual IdentityUser User { get; set; }
 
         /// <summary>
         /// Constructor for a GameDeck object (not including price)
