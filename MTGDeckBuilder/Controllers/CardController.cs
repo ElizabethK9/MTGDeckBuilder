@@ -38,44 +38,34 @@ namespace MTGDeckBuilder.Controllers
             var result = await service.Where(x => x.Name, cardSearch)
                                       .AllAsync();
 
+            if (result == null || !result.Value.Any())
+            {
+                return NotFound("No cards found.");
+            }
+
             // Card search result values
-
-            var firstResult = result.Value[0];
-
-            string multiverseIdString = firstResult.MultiverseId;
-            int multiverseId = Convert.ToInt32(multiverseIdString);
-
-            string cardName = firstResult.Name;
-
-            string cardType = firstResult.Type;
-
-            string cardSubtype;
-            if (firstResult.SubTypes.FirstOrDefault() != null)
+            var firstResult = result.Value.FirstOrDefault();
+            if (firstResult == null)
             {
-                cardSubtype = firstResult.SubTypes.FirstOrDefault();
-            }
-            else
-            {
-                cardSubtype = "N/A";
+                return NotFound("Card not found.");
             }
 
-            string manaCost = firstResult.Cmc.ToString();
+            string cardSubtype = firstResult.SubTypes?.FirstOrDefault() ?? "N/A";
+            int creaturePower = firstResult.Power != null ? Convert.ToInt32(firstResult.Power) : 0;
+            int creatureToughness = firstResult.Toughness != null ? Convert.ToInt32(firstResult.Toughness) : 0;
 
-            string cardSet = firstResult.Set;
-
-            int creaturePower = Convert.ToInt32(firstResult.Power);
-
-            int creatureToughness = Convert.ToInt32(firstResult.Toughness);
-
-            int collectorNumber = Convert.ToInt32(firstResult.Number);
-
-            string cardImageURL = firstResult.ImageUrl.ToString();
-
-            // Pass image url as a cardName object
-            GameCard card = new GameCard(multiverseId, cardName, cardType,
-                                         cardSubtype, manaCost, cardSet,
-                                         creaturePower, creatureToughness, collectorNumber,
-                                         cardImageURL);
+            GameCard card = new GameCard(
+                Convert.ToInt32(firstResult.MultiverseId),
+                firstResult.Name,
+                firstResult.Type,
+                cardSubtype,
+                firstResult.Cmc.ToString(),
+                firstResult.Set,
+                creaturePower,
+                creatureToughness,
+                Convert.ToInt32(firstResult.Number),
+                firstResult.ImageUrl?.ToString()
+            );
 
             return View(card);
         }
