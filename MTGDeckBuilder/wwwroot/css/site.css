@@ -19,7 +19,7 @@ html {
 
 /* This is the index.cshtml css*/
 body {
-    margin-bottom: 60px;
+    margin-bottom: 0px;
     background-image: url('/sdf.webp');
     background-size: cover;
     background-position: center;
@@ -28,32 +28,32 @@ body {
 .welcome h1 {
     font-size: 4.5em;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 0px;
     color: lightblue;
 }
 
 .About{
     text-align: center;
-    margin-top: 50px;
+    margin-top: 0px;
 }
 
 #One{
     color: lightgreen;
-    margin-top: 100px;
+    margin-top: 0px;
 }
 
 #Two{
     color: lightcoral;
-    margin-top: 50px;
+    margin-top: 0px;
 }
 
 #Three{
     color: lightcyan;
-    margin-top: 50px;
+    margin-top: 0px;
 }
 
 .warning{
     color: darkgoldenrod;
     text-align: center;
-    margin-top: 200px;
+    margin-top: 0px;
 }
