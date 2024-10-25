@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace MTGDeckBuilder.Models
 {
@@ -13,6 +14,7 @@ namespace MTGDeckBuilder.Models
         /// Multiverse id of a card. Multiverse id is a unique id for each card
         /// in Magic that refers to each cards printed order from each set.
         /// </summary>
+        [Key]
         public int? CardMID { get; set; }
 
         /// <summary>
@@ -70,6 +72,11 @@ namespace MTGDeckBuilder.Models
         public int? CollectorNumber { get; set; }
 
         public string? cardImageURL { get; set; }
+
+        /// <summary>
+        /// User that owns the card
+        /// </summary>
+        public IdentityUser User { get; set; }
 
         // Parameterless constructor
         public GameCard() { }

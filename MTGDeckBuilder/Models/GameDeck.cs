@@ -35,14 +35,9 @@ namespace MTGDeckBuilder.Models
         public int DeckPrice { get; set; }
 
         /// <summary>
-        /// Id of the user that made the deck
+        /// User that owns the deck
         /// </summary>
-        public IdentityUser UserID { get; set; }
-
-        /// <summary>
-        /// Navigation property for the user.
-        /// </summary>
-        public virtual IdentityUser User { get; set; }
+        public IdentityUser User { get; set; }
 
         /// <summary>
         /// Constructor for a GameDeck object (not including price)

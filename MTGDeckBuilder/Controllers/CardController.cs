@@ -15,7 +15,7 @@ namespace MTGDeckBuilder.Controllers
         }
 
         [HttpPost]
-        public ActionResult CardSearch(GameCard card)
+        public ActionResult CardSearch(CardSearch card)
         {
             if(ModelState.IsValid)
             {
