@@ -4,6 +4,7 @@ using MTGDeckBuilder.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MTGDeckBuilder.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241025024829_Added game cards and game decks to the database")]
+    partial class Addedgamecardsandgamedeckstothedatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,6 +61,9 @@ namespace MTGDeckBuilder.Data.Migrations
                     b.Property<string>("ManaCost")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserIDId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -65,6 +71,8 @@ namespace MTGDeckBuilder.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CardMID");
+
+                    b.HasIndex("UserIDId");
 
                     b.HasIndex("UserId");
 
@@ -90,10 +98,15 @@ namespace MTGDeckBuilder.Data.Migrations
                     b.Property<int>("DeckPrice")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserIDId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserIDId");
 
                     b.HasIndex("UserId");
 
@@ -304,20 +317,32 @@ namespace MTGDeckBuilder.Data.Migrations
 
             modelBuilder.Entity("MTGDeckBuilder.Models.GameCard", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UserID")
+                        .WithMany()
+                        .HasForeignKey("UserIDId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+
+                    b.Navigation("UserID");
                 });
 
             modelBuilder.Entity("MTGDeckBuilder.Models.GameDeck", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UserID")
+                        .WithMany()
+                        .HasForeignKey("UserIDId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+
+                    b.Navigation("UserID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -64,10 +64,6 @@
               "target": "Package",
               "version": "[3.11.0, )"
             },
-            "Microsoft.CodeAnalysis.Common": {
-              "target": "Package",
-              "version": "[4.11.0, )"
-            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.10, )"

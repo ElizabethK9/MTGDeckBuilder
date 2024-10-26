@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MTGDeckBuilder.Models;
 
 namespace MTGDeckBuilder.Data
 {
@@ -8,6 +9,16 @@ namespace MTGDeckBuilder.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        public DbSet<GameDeck> GameDecks { get; set; }
+        public DbSet<GameCard> GameCards { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Additional model configuration can go here
         }
     }
 }

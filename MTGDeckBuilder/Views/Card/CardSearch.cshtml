@@ -1,4 +1,4 @@
-﻿@model MTGDeckBuilder.Models.GameCard
+﻿@model MTGDeckBuilder.Models.CardSearch
 
 @{
     ViewData["Title"] = "CardSearch";
@@ -21,6 +21,27 @@
         </form>
     </div>
 </div>
+
+@if (Model.SearchResults.Any())
+{
+    foreach (GameCard card in Model.SearchResults)
+    {
+        <div class="card" style="width: 18rem; margin: 1rem; text-align:center">
+            <img src="@card.ImageURL" class="card-img-top" alt="@card.Name @card.Set">
+            <div class="card-body">
+                <h5 class="card-title">@card.Name</h5>
+                <p class="card-text">Set: @card.Set</p>
+                <div class="form-group">
+                    <input type="submit" value="Add to Deck" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>Card could not be found</p>
+}
 
 <div>
     <a asp-action="CardSearch">Back to List</a>
