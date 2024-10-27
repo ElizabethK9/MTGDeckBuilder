@@ -61,6 +61,14 @@ body {
 }
 
 /* Changes color of cardsearch background on each card*/
-#cardContainer {
+.card {
     background-color: #0d2a36 !important;
+}
+
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Make it take the full viewport height */
 }

@@ -18,12 +18,25 @@ namespace MTGDeckBuilder.Controllers
         [HttpPost]
         public async Task<ActionResult> CardSearch(CardSearch card)
         {
-            if(ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await card.PerformCardSearch();
+                TempData["IsValidData"] = "False";
                 return View(card);
             }
+
+            await card.PerformCardSearch();
+
+            if (card.SearchResults == null || !card.SearchResults.Any())
+            {
+                TempData["IsValidData"] = "False";
+            }
+            else
+            {
+                TempData["IsValidData"] = "True";
+            }
+
             return View(card);
         }
+
     }
 }
