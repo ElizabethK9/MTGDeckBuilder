@@ -26,7 +26,7 @@
 {
     foreach (GameCard card in Model.SearchResults)
     {
-        <div class="card" style="width: 18rem; margin: 1rem; text-align:center">
+        <div class="card" id="cardContainer" style="width: 18rem; margin: 1rem; text-align:center">
             <img src="@card.ImageURL" class="card-img-top" alt="@card.Name @card.Set">
             <div class="card-body">
                 <h5 class="card-title">@card.Name</h5>
