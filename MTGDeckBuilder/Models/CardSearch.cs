@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using MtgApiManager.Lib.Service;
 using System.ComponentModel.DataAnnotations;
 
@@ -53,7 +54,7 @@ namespace MTGDeckBuilder.Models
 
             // Store 10 of the first non-null search results into a list
             List<GameCard> searchResultsList = new List<GameCard>();
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0;i < SearchResults.Value.Count() && searchResultsList.Count <= 10; i++)
             {
                 // Card search result values
                 var currentResult = SearchResults.Value[i];
@@ -71,7 +72,13 @@ namespace MTGDeckBuilder.Models
                         currentResult.Number,
                         currentResult.ImageUrl?.ToString()
                     );
-                    searchResultsList.Add(card);
+
+                    if (string.IsNullOrWhiteSpace(currentResult.ImageUrl?.ToString())) 
+                    {
+                        continue;
+                    }
+
+                    searchResultsList.Add(card);                 
                 }   
             }
             return searchResultsList;

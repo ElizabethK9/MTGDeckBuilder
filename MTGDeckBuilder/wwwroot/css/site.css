@@ -24,6 +24,7 @@ body {
     background-position: center;
     background-image: url('/sdf.webp');
     background-attachment: fixed; /* Keeps it fixed while scrolling */
+    color:aquamarine;
 }
 
 .welcome h1 {
@@ -57,4 +58,17 @@ body {
     color: darkgoldenrod;
     text-align: center;
     margin-top: 200px;
+}
+
+/* Changes color of cardsearch background on each card*/
+.card {
+    background-color: #0d2a36 !important;
+}
+
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Make it take the full viewport height */
 }
