@@ -20,9 +20,10 @@ html {
 /* This is the index.cshtml css*/
 body {
     margin-bottom: 60px;
-    background-image: url('/sdf.webp');
     background-size: cover;
     background-position: center;
+    background-image: url('/sdf.webp');
+    background-attachment: fixed; /* Keeps it fixed while scrolling */
 }
 
 .welcome h1 {
