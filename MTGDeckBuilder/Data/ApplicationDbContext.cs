@@ -5,7 +5,7 @@ using MTGDeckBuilder.Models;
 
 namespace MTGDeckBuilder.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<UserInventory>
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
