@@ -20,5 +20,30 @@ namespace MTGDeckBuilder.Models
                 }
             }
         }
+
+        public static async Task CreateAdmin(IServiceProvider provider)
+        {
+            var userManager = provider.GetService<UserManager<IdentityUser>>();
+            var roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            string adminEmail = "Admin@gmail.com";
+            string adminPassword = "Abc123!";
+
+            // Check if the admin user exists
+            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+            if (adminUser == null)
+            {
+                // Temporary admin role, would want to keep this information hidden
+                // when site would be live
+                var admin = new IdentityUser()
+                {
+                    Email = "Admin@gmail.com",
+                    UserName = "Admin"
+                };
+
+                await userManager.CreateAsync(admin, "Abc123!");
+                await userManager.AddToRoleAsync(admin, Admin);
+            }
+        }
     }
 }
