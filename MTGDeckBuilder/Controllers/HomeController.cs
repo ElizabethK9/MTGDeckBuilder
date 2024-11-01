@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MTGDeckBuilder.Models;
 using System.Diagnostics;
 
 namespace MTGDeckBuilder.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -12,7 +14,7 @@ namespace MTGDeckBuilder.Controllers
         {
             _logger = logger;
         }
-
+        [AllowAnonymous] // Anyone can access main page
         public IActionResult Index()
         {
             ViewBag.PageTitle = "MTGDeckBuilder";
