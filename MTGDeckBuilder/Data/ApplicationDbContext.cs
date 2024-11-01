@@ -1,21 +1,27 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MTGDeckBuilder.Models;
 
 namespace MTGDeckBuilder.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<UserInventory>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-        public DbSet<UserInventory> userInventories { get; set; }
+        public DbSet<GameDeck> GameDecks { get; set; }
+        public DbSet<GameCard> GameCards { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Additional model configuration can go here
+            // Configure the discriminator for UserInventory
+            modelBuilder.Entity<UserInventory>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<UserInventory>("UserInventory");
         }
     }
 }
