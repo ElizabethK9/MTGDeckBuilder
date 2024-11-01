@@ -5,9 +5,9 @@ namespace MTGDeckBuilder.Controllers
 {
     public class UserInventoryController : Controller
     {
-        public IActionResult CreateDeck()
+        public IActionResult Create()
         {
-            return View();
+            return View(new UserInventory());
         }
     }
 }

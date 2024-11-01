@@ -17,11 +17,6 @@ namespace MTGDeckBuilder.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            // Configure the discriminator for UserInventory
-            modelBuilder.Entity<UserInventory>()
-                .HasDiscriminator<string>("Discriminator")
-                .HasValue<UserInventory>("UserInventory");
         }
     }
 }
