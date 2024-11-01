@@ -30,14 +30,14 @@ namespace MTGDeckBuilder.Models
         public string DeckFormat { get; set; }
 
         /// <summary>
-        /// Price of the deck determined by the collective value of each card within the deck.
+        /// Collection of all the cards in the deck
         /// </summary>
-        public int DeckPrice { get; set; }
+        public List<GameCard> Cards { get; set; } = new List<GameCard>();
 
         /// <summary>
         /// User that owns the deck
         /// </summary>
-        public IdentityUser User { get; set; }
+        public UserInventory User { get; set; }
 
         /// <summary>
         /// Constructor for a GameDeck object (not including price)

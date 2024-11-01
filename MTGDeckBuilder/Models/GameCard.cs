@@ -16,7 +16,7 @@ namespace MTGDeckBuilder.Models
         /// in Magic that refers to each cards printed order from each set.
         /// </summary>
         [Key]
-        public string? MID { get; set; }
+        public string MID { get; set; }
 
         /// <summary>
         /// Fullname of the card
@@ -77,7 +77,7 @@ namespace MTGDeckBuilder.Models
         /// <summary>
         /// User that owns the card
         /// </summary>
-        public IdentityUser User { get; set; }
+        public UserInventory User { get; set; }
 
         // Parameterless constructor
         public GameCard() { }
