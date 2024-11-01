@@ -6,7 +6,7 @@
 # Please ignore bin file changes
 /bin/
 /obj/
-/Migrations/*.cs
+Migrations/*
 
 # User-specific files
 *.rsuser
