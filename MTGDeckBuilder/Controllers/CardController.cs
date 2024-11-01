@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using MtgApiManager.Lib.Service;
@@ -6,6 +7,8 @@ using MTGDeckBuilder.Models;
 #nullable disable
 namespace MTGDeckBuilder.Controllers
 {
+    // You have to be logged in to access
+    [Authorize]
     public class CardController : Controller
     {
         [HttpGet]
