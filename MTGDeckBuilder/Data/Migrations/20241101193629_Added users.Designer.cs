@@ -4,6 +4,7 @@ using MTGDeckBuilder.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MTGDeckBuilder.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241101193629_Added users")]
+    partial class Addedusers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,14 +64,9 @@ namespace MTGDeckBuilder.Data.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserInventoryId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("MID");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserInventoryId");
 
                     b.ToTable("GameCard");
                 });
@@ -93,19 +91,13 @@ namespace MTGDeckBuilder.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserInventoryId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("UserInventoryId");
-
-                    b.ToTable("GameDeck");
+                    b.ToTable("GameDecks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -172,11 +164,6 @@ namespace MTGDeckBuilder.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -228,10 +215,6 @@ namespace MTGDeckBuilder.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator().HasValue("IdentityUser");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -319,22 +302,11 @@ namespace MTGDeckBuilder.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MTGDeckBuilder.Models.UserInventory", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.HasDiscriminator().HasValue("UserInventory");
-                });
-
             modelBuilder.Entity("MTGDeckBuilder.Models.GameCard", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.HasOne("MTGDeckBuilder.Models.UserInventory", null)
-                        .WithMany("AllCards")
-                        .HasForeignKey("UserInventoryId");
 
                     b.Navigation("User");
                 });
@@ -343,13 +315,7 @@ namespace MTGDeckBuilder.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MTGDeckBuilder.Models.UserInventory", null)
-                        .WithMany("AllDecks")
-                        .HasForeignKey("UserInventoryId");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -403,13 +369,6 @@ namespace MTGDeckBuilder.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MTGDeckBuilder.Models.UserInventory", b =>
-                {
-                    b.Navigation("AllCards");
-
-                    b.Navigation("AllDecks");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,8 +2,13 @@
 
 namespace MTGDeckBuilder.Models
 {
-    public class User : IdentityUser
+    public class UserInventory : IdentityUser
     {
+        public UserInventory()
+        {
+            AllDecks = new List<GameDeck>();
+            AllCards = new List<GameCard>();
+        }
         public List<GameDeck> AllDecks { get; set; }
 
         public List<GameCard> AllCards { get; set; }
