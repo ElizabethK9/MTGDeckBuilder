@@ -13,6 +13,7 @@ namespace MTGDeckBuilder.Data
         }
         public DbSet<GameDeck> GameDecks { get; set; }
         public DbSet<GameCard> GameCards { get; set; }
+        public DbSet<UserInventory> UserInventories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
