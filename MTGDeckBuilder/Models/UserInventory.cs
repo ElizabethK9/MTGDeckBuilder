@@ -11,12 +11,10 @@ namespace MTGDeckBuilder.Models
     public class UserInventory
     {
         [Key] public int Id { get; set; }
+        [ForeignKey("IdentityUser")] 
+        public string IdentityUserId { get; set; }
         // User that this inventory belongs to
-        [ForeignKey("IdentityUser")] public string IdentityUserId { get; set; }
-        public IdentityUser IdentityUser
-        {
-            get; set;
-        }
+        public IdentityUser IdentityUser{ get; set; } 
         public List<GameDeck> AllDecks { get; set; }
         public List<GameCard> AllCards { get; set; }
         public UserInventory()
