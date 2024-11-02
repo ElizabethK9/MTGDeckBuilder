@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+#nullable disable
 
 namespace MTGDeckBuilder.Models
 {
@@ -10,6 +11,7 @@ namespace MTGDeckBuilder.Models
     /// </summary>
     public class GameDeck
     {
+
         /// <summary>
         /// Unique identifier for each of the user's decks. Start from 0 and increment with every deck.
         /// </summary>
@@ -39,17 +41,28 @@ namespace MTGDeckBuilder.Models
         /// </summary>
         public UserInventory User { get; set; }
 
+        // Parameterless constructor for model binding
+        public GameDeck() { }
+
         /// <summary>
         /// Constructor for a GameDeck object (not including price)
         /// </summary>
         /// <param name="id"></param>
         /// <param name="deckName"></param>
         /// <param name="deckFormat"></param>
-        public GameDeck(int id, string deckName, string deckFormat) 
+        public GameDeck(string deckName, string deckFormat) 
         {
-            this.Id = id;
             this.DeckName = deckName;
             this.DeckFormat = deckFormat;
+        }
+
+        /// <summary>
+        /// Adds a card to the deck
+        /// </summary>
+        /// <param name="card"></param>
+        public void AddCard(GameCard card)
+        {
+            Cards.Add(card);
         }
     }
 }
