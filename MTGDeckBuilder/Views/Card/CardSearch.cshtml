@@ -1,30 +1,56 @@
-﻿@model MTGDeckBuilder.Models.GameCard
+﻿@model MTGDeckBuilder.Models.CardSearch
 
 @{
     ViewData["Title"] = "CardSearch";
 }
+<div class="centered-container">
+    <h1>Card Search</h1>
 
-<h1>Card Search</h1>
+    <hr />
+    <div class="row">
+        <div class="col-mb-3">
+            <form asp-action="CardSearch">
+                <div class="form-group">
+                    <label asp-for="CardName" class="control-label"></label>
+                    <input asp-for="CardName" class="form-control" />
+                    <span asp-validation-for="CardName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CardSearch">
-            <div class="form-group">
-                <label asp-for="CardName" class="control-label"></label>
-                <input asp-for="CardName" class="form-control" />
-                <span asp-validation-for="CardName" class="text-danger"></span>
+    @if (TempData["IsValidData"] == "False")
+    {
+        <p class="text-danger">Card could not be found</p>
+    }
+    
+    else
+    {
+        foreach (GameCard card in Model.SearchResults)
+        {
+            <div class="card" style="width: 18rem; margin: 1rem; text-align:center">
+                <img src="@card.ImageURL" class="card-img-top" alt="@card.Name @card.Set">
+                <div class="card-body">
+                    <h5 class="card-title">@card.Name</h5>
+                    <p class="card-text">Set: @card.Set</p>
+                    <div class="form-group">
+                        <input type="submit" value="Add to Deck" class="btn btn-primary" />
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Search" class="btn btn-primary" />
-            </div>
-        </form>
+        }
+    }
+    
+
+    <div>
+        <a asp-action="CardSearch">Back to List</a>
     </div>
 </div>
 
-<div>
-    <a asp-action="CardSearch">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
