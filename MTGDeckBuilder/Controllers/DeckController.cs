@@ -38,7 +38,6 @@ namespace MTGDeckBuilder.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                _logger.LogWarning("User not found");
                 TempData["ErrorMessage"] = "User not found";
                 return View(deck);
             }
@@ -48,7 +47,6 @@ namespace MTGDeckBuilder.Controllers
 
             if (userInventory == null)
             {
-                _logger.LogWarning("User inventory not found for user ID {UserId}", user.Id);
                 TempData["ErrorMessage"] = "User inventory not found";
                 return View(deck);
             }
@@ -62,7 +60,6 @@ namespace MTGDeckBuilder.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error saving deck to database");
                 TempData["ErrorMessage"] = "An error occurred while saving the deck";
             }
 
