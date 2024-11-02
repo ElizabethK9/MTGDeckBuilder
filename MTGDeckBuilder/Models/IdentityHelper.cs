@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using MTGDeckBuilder.Data;
 
 namespace MTGDeckBuilder.Models
 {
@@ -25,6 +26,7 @@ namespace MTGDeckBuilder.Models
         {
             var userManager = provider.GetService<UserManager<IdentityUser>>();
             var roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
+            var context = provider.GetRequiredService<ApplicationDbContext>();
 
             string adminEmail = "Admin@gmail.com";
             string adminPassword = "Abc123!";
@@ -43,6 +45,11 @@ namespace MTGDeckBuilder.Models
 
                 await userManager.CreateAsync(admin, "Abc123!");
                 await userManager.AddToRoleAsync(admin, Admin);
+
+                // Create the UserInventory for the admin
+                var userInventory = new UserInventory { IdentityUserId = admin.Id, IdentityUser = admin }; 
+                context.UserInventories.Add(userInventory); 
+                await context.SaveChangesAsync();
             }
         }
     }

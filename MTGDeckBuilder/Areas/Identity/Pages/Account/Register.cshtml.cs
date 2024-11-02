@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using MTGDeckBuilder.Data;
 using MTGDeckBuilder.Models;
 #nullable disable
 
@@ -31,7 +32,7 @@ namespace MTGDeckBuilder.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private readonly ApplicationDbContext _context;
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
@@ -127,6 +128,12 @@ namespace MTGDeckBuilder.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
                     await _userManager.AddToRoleAsync(user, IdentityHelper.GeneralUser);
+
+                    // Create the UserInventory for the general user
+                    var userInventory = new UserInventory { IdentityUserId = user.Id, IdentityUser = user };
+                    _context.UserInventories.Add(userInventory);
+                    await _context.SaveChangesAsync();
+
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
