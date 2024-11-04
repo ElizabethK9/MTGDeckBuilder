@@ -13,12 +13,13 @@ Planned features that will be included once the website is fully complete:
 
 # Website Preview
 ## Main Page
-![image](https://github.com/user-attachments/assets/d104e775-d976-4ef6-87d8-55a8e541df3f)
+![image](https://github.com/user-attachments/assets/940be225-cd78-4a92-93d8-a56badea1dfb)
 ## Card Search Page
-![image](https://github.com/user-attachments/assets/56963d98-d286-4ac4-8432-0ebe8d6deda1)
-![image](https://github.com/user-attachments/assets/e9218011-58e0-463c-acb3-40bb8d34bdd3)
+![image](https://github.com/user-attachments/assets/5b310160-f0ec-4cb5-99ee-4d064f1e9086)
+![image](https://github.com/user-attachments/assets/b52a8642-7d15-4dab-8ef2-e5f9efbabe11)
 - When searching for a card, a max of 10 results will populate the page
-
+## Deck Creation Page
+![image](https://github.com/user-attachments/assets/be043ee8-92e5-40a2-8606-6f29a079c910)
 ## Helpful Links
 [MTG Api For DotNet](https://github.com/MagicTheGathering/mtg-sdk-dotnet)   
 [Api Documentation](https://docs.magicthegathering.io/)   
