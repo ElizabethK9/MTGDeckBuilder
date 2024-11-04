@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using MtgApiManager.Lib.Service;
@@ -6,78 +7,39 @@ using MTGDeckBuilder.Models;
 #nullable disable
 namespace MTGDeckBuilder.Controllers
 {
+    // You have to be logged in to access
+    [Authorize]
     public class CardController : Controller
     {
         [HttpGet]
         public ActionResult CardSearch()
         {
-            return View();
+            CardSearch model = new CardSearch();
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult CardSearch(GameCard card)
+        public async Task<ActionResult> CardSearch(CardSearch card)
         {
-            if(ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                TempData["Card"] = card.CardName;
-                return RedirectToAction("ViewCard");
+                TempData["IsValidData"] = "False";
+                return View(card);
             }
-            return View(card);
-        }
 
-        public async Task<ActionResult> ViewCard()
-        {
-            // User entered string for card search
-            string cardSearch = TempData["Card"] as string;
+            await card.PerformCardSearch();
 
-            // Initilize MTG framework
-            IMtgServiceProvider serviceProvider = new MtgServiceProvider();
-            ICardService service = serviceProvider.GetCardService();
-
-            // Pass in cardSearch string into the framework
-            var result = await service.Where(x => x.Name, cardSearch)
-                                      .AllAsync();
-
-            // Card search result values
-
-            var firstResult = result.Value[0];
-
-            string multiverseIdString = firstResult.MultiverseId;
-            int multiverseId = Convert.ToInt32(multiverseIdString);
-
-            string cardName = firstResult.Name;
-
-            string cardType = firstResult.Type;
-
-            string cardSubtype;
-            if (firstResult.SubTypes.FirstOrDefault() != null)
+            if (card.SearchResults == null || !card.SearchResults.Any())
             {
-                cardSubtype = firstResult.SubTypes.FirstOrDefault();
+                TempData["IsValidData"] = "False";
             }
             else
             {
-                cardSubtype = "N/A";
+                TempData["IsValidData"] = "True";
             }
-
-            string manaCost = firstResult.Cmc.ToString();
-
-            string cardSet = firstResult.Set;
-
-            int creaturePower = Convert.ToInt32(firstResult.Power);
-
-            int creatureToughness = Convert.ToInt32(firstResult.Toughness);
-
-            int collectorNumber = Convert.ToInt32(firstResult.Number);
-
-            string cardImageURL = firstResult.ImageUrl.ToString();
-
-            // Pass image url as a cardName object
-            GameCard card = new GameCard(multiverseId, cardName, cardType,
-                                         cardSubtype, manaCost, cardSet,
-                                         creaturePower, creatureToughness, collectorNumber,
-                                         cardImageURL);
 
             return View(card);
         }
+
     }
 }

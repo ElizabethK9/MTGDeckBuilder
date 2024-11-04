@@ -11,36 +11,30 @@
 </head>
 <body>
     <header>
-        <div>
+        <div> 
             <nav class="nav nav-pills nav-justified">
-                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Resources" ? "active" : "")" asp-area="" asp-controller="Resources" asp-action="Index">Resources</a>
-                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Card" ? "active" : "")" asp-area="" asp-controller="Card" asp-action="Index">Card Search</a>
+                
+                    <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Resources" ? "active" : "")" asp-area="" asp-controller="Resources" asp-action="Index">Resources</a>
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Card" ? "active" : "")" asp-area="" asp-controller="Card" asp-action="Index">Card Search</a>
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "CardInventory" ? "active" : "")" asp-area="" asp-controller="CardInventory" asp-action="Index">blah blah blah</a>
+                    <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Deck" ? "active" : "")" asp-area="" asp-controller="Deck" asp-action="Index">Your Decks</a>
+                    
+                    <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "CardInventory" ? "active" : "")" asp-area="" asp-controller="CardInventory" asp-action="Index">Your Collection</a>
+                    
                 
 
-                @if (User.Identity?.IsAuthenticated ?? false)
-                {
-                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
-                        <button type="submit" class="btn btn-link nav-link text-primary">Log Out</button>
-                    </form>
-                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Deck" ? "active" : "")" asp-area="" asp-controller="Deck" asp-action="Index">Your Decks</a>
-                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "CardInventory" ? "active" : "")" asp-area="" asp-controller="CardInventory" asp-action="Index">Your Collection</a>
-                }
-                else
-                {
-                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                }
+                
             </nav>
         </div>
     </header>
-
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
+       
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
