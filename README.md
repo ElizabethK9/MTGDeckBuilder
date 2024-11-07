@@ -10,16 +10,15 @@ Planned features that will be included once the website is fully complete:
 - Sharing decks with others on a forum
 - Life tracker
 - Dice roller to determine turn order
-
 # Website Preview
 ## Main Page
-![image](https://github.com/user-attachments/assets/940be225-cd78-4a92-93d8-a56badea1dfb)
+![image](https://github.com/user-attachments/assets/10c9bf17-f34a-42f2-ae2e-664186fbc24f)
 ## Card Search Page
-![image](https://github.com/user-attachments/assets/5b310160-f0ec-4cb5-99ee-4d064f1e9086)
-![image](https://github.com/user-attachments/assets/b52a8642-7d15-4dab-8ef2-e5f9efbabe11)
+![image](https://github.com/user-attachments/assets/b3f9dcff-af4d-4d69-a1ae-fd54b9e80996)
+![image](https://github.com/user-attachments/assets/3f307cd4-2379-48d3-8209-e4561622008d)
 - When searching for a card, a max of 10 results will populate the page
 ## Deck Creation Page
-![image](https://github.com/user-attachments/assets/be043ee8-92e5-40a2-8606-6f29a079c910)
+![image](https://github.com/user-attachments/assets/7a6216b9-e53e-4b4d-91e6-d9c84c1ea64a)
 ## Helpful Links
 [MTG Api For DotNet](https://github.com/MagicTheGathering/mtg-sdk-dotnet)   
 [Api Documentation](https://docs.magicthegathering.io/)   
