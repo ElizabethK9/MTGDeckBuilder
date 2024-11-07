@@ -7,8 +7,6 @@ using MTGDeckBuilder.Models;
 #nullable disable
 namespace MTGDeckBuilder.Controllers
 {
-    // You have to be logged in to access
-    [Authorize]
     public class CardController : Controller
     {
         [HttpGet]
