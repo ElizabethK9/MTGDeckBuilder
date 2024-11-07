@@ -27,16 +27,15 @@ namespace MTGDeckBuilder.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            if (returnUrl != null)
+
+            // Default returnUrl to '/' if it's null or points to the logout page.
+            if (string.IsNullOrEmpty(returnUrl) || returnUrl == "/Identity/Account/Logout")
             {
-                return LocalRedirect(returnUrl);
+                returnUrl = "/";
             }
-            else
-            {
-                // This needs to be a redirect so that the browser performs a new
-                // request and the identity for the user gets updated.
-                return RedirectToPage();
-            }
+
+            // Perform the redirect to the specified returnUrl (or '/' if defaulted).
+            return LocalRedirect(returnUrl);
         }
     }
 }
