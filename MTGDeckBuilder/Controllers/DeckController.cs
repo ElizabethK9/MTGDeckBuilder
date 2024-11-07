@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using MTGDeckBuilder.Data;
 using MTGDeckBuilder.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging; // Add this for logging
 
 namespace MTGDeckBuilder.Controllers
 {
@@ -18,6 +17,22 @@ namespace MTGDeckBuilder.Controllers
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        [HttpGet]
+        public IActionResult ViewAllDecks() 
+        {
+            // Get all decks made by the current user from the db
+            // Send all decks into the view
+            return View(); 
+        }
+
+        [HttpPost]
+        public IActionResult ViewAllDecks(GameDeck deck)
+        {
+            // Create deck logic (check if user clicked the button)
+            // Send User to the deck they clicked (if they clicked an existing deck)
+            return View();
         }
 
         [HttpGet]
@@ -35,6 +50,7 @@ namespace MTGDeckBuilder.Controllers
                 return View(deck);
             }
 
+            // Quite possibly redundant code because DeckController is set to [Authorize]
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -45,6 +61,8 @@ namespace MTGDeckBuilder.Controllers
             var userInventory = await _context.UserInventories
                 .FirstOrDefaultAsync(ui => ui.IdentityUserId == user.Id);
 
+            // Quite possibly redundant code because all users should have an inventory,
+            // empty or not.
             if (userInventory == null)
             {
                 TempData["ErrorMessage"] = "User inventory not found";
@@ -58,7 +76,7 @@ namespace MTGDeckBuilder.Controllers
                 await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Deck created successfully";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 TempData["ErrorMessage"] = "An error occurred while saving the deck";
             }
