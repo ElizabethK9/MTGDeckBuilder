@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MTGDeckBuilder.Data;
 using MTGDeckBuilder.Models;
 using Microsoft.EntityFrameworkCore;
-
+#nullable disable
 namespace MTGDeckBuilder.Controllers
 {
     [Authorize]
@@ -20,10 +20,16 @@ namespace MTGDeckBuilder.Controllers
         }
 
         [HttpGet]
-        public IActionResult ViewAllDecks() 
+        public async Task<IActionResult> ViewAllDecks() 
         {
+            // Get current logged user
+            IdentityUser user = await _userManager.GetUserAsync(User);
+
             // Get all decks made by the current user from the db
-            // Send all decks into the view
+
+
+            // Send all user's decks into the view
+
             return View(); 
         }
 
@@ -49,27 +55,28 @@ namespace MTGDeckBuilder.Controllers
                 TempData["ErrorMessage"] = "Deck is invalid";
                 return View(deck);
             }
+           
+            IdentityUser user = await _userManager.GetUserAsync(User);
 
             // Quite possibly redundant code because DeckController is set to [Authorize]
-            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 TempData["ErrorMessage"] = "User not found";
                 return View(deck);
             }
 
-            var userInventory = await _context.UserInventories
+            UserInventory currentUsersInventory = await _context.UserInventories
                 .FirstOrDefaultAsync(ui => ui.IdentityUserId == user.Id);
 
             // Quite possibly redundant code because all users should have an inventory,
             // empty or not.
-            if (userInventory == null)
+            if (currentUsersInventory == null)
             {
                 TempData["ErrorMessage"] = "User inventory not found";
                 return View(deck);
             }
 
-            userInventory.AddDeck(_context, deck);
+            currentUsersInventory.AddDeck(_context, deck);
 
             try
             {
