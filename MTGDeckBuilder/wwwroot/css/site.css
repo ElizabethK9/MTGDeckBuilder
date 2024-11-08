@@ -72,3 +72,11 @@ body {
     justify-content: center;
     min-height: 100vh; /* Make it take the full viewport height */
 }
+
+/* Styling for the View Deck page*/
+td {
+    color: aquamarine
+}
+th {
+    color: darkgoldenrod
+}

@@ -132,7 +132,7 @@ namespace MTGDeckBuilder.Areas.Identity.Pages.Account
                     await _userManager.AddToRoleAsync(user, IdentityHelper.GeneralUser);
 
                     // Create the UserInventory for the general user
-                    var userInventory = new UserInventory { IdentityUserId = user.Id, IdentityUser = user };
+                    var userInventory = new UserInventory { IdentityUserId = user.Id, User = user };
                     _context.UserInventories.Add(userInventory);
                     await _context.SaveChangesAsync();
 

@@ -23,8 +23,7 @@
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
                         <button type="submit" class="btn btn-link nav-link text-primary">Log Out</button>
                     </form>
-                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Deck" ? "active" : "")" asp-area="" asp-controller="Deck" asp-action="Index">Your Decks</a>
-                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Deck" ? "active" : "")" asp-area="" asp-controller="Deck" asp-action="Create">Add a Deck</a>
+                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Deck" ? "active" : "")" asp-area="" asp-controller="Deck" asp-action="ViewAllDecks">Your Decks</a>
                     <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "CardInventory" ? "active" : "")" asp-area="" asp-controller="CardInventory" asp-action="Index">Your Collection</a>
                 }
                 else

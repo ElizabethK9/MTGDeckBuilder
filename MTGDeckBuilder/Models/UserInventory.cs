@@ -2,7 +2,7 @@
 using MTGDeckBuilder.Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+#nullable disable
 namespace MTGDeckBuilder.Models
 {
     /// <summary>
@@ -13,26 +13,24 @@ namespace MTGDeckBuilder.Models
         [Key] public int Id { get; set; }
         [ForeignKey("IdentityUser")] 
         public string IdentityUserId { get; set; }
-        // User that this inventory belongs to
-        public IdentityUser IdentityUser{ get; set; } 
         public List<GameDeck> AllDecks { get; set; }
         public List<GameCard> AllCards { get; set; }
+        // User that this inventory belongs to
+        public IdentityUser User{ get; set; } 
         public UserInventory()
         {
             AllDecks = new List<GameDeck>();
             AllCards = new List<GameCard>();
         }
-        
         /// <summary>
         /// Adds a deck to the current user's deck collection
         /// </summary>
         /// <param name="deck"></param>
         public void AddDeck(ApplicationDbContext context, GameDeck deck)
         {
-            AllDecks.Add(deck);
             // Update User's card collection in the db
+            deck.Inventory = this;
             context.GameDecks.Add(deck);
-            context.SaveChanges();
         }
 
         /// <summary>
@@ -41,10 +39,8 @@ namespace MTGDeckBuilder.Models
         /// <param name="deck"></param>
         public void RemoveDeck(ApplicationDbContext context, GameDeck deck)
         {
-            AllDecks.Remove(deck);
             // Update User's Deck collection in the db
             context.GameDecks.Remove(deck);
-            context.SaveChanges();
         }
 
         /// <summary>
@@ -53,10 +49,9 @@ namespace MTGDeckBuilder.Models
         /// <param name="card"></param>
         public void AddCard(ApplicationDbContext context, GameCard card)
         {           
-            AllCards.Add(card);
             // Update User's card collection in the db
+            card.Inventory = this;
             context.GameCards.Add(card);
-            context.SaveChanges();
         }
 
         /// <summary>
@@ -65,10 +60,16 @@ namespace MTGDeckBuilder.Models
         /// <param name="card"></param>
         public void RemoveCard(ApplicationDbContext context, GameCard card)
         {
-            AllCards.Remove(card);
             // Update User's card collection in the db
             context.GameCards.Remove(card);
-            context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Saves changes made to the user's inventory in the database.
+        /// </summary>
+        public async Task SaveChanges(ApplicationDbContext context)
+        {
+           await context.SaveChangesAsync();
         }
     }
 }

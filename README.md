@@ -10,16 +10,23 @@ Planned features that will be included once the website is fully complete:
 - Sharing decks with others on a forum
 - Life tracker
 - Dice roller to determine turn order
-
 # Website Preview
 ## Main Page
-![image](https://github.com/user-attachments/assets/940be225-cd78-4a92-93d8-a56badea1dfb)
+![image](https://github.com/user-attachments/assets/d177d5cb-2128-45f3-898f-83620489c2d3)
 ## Card Search Page
-![image](https://github.com/user-attachments/assets/5b310160-f0ec-4cb5-99ee-4d064f1e9086)
-![image](https://github.com/user-attachments/assets/b52a8642-7d15-4dab-8ef2-e5f9efbabe11)
+![image](https://github.com/user-attachments/assets/5f8c54e4-4442-4b05-bcd3-a882bbdc7a55)
+![image](https://github.com/user-attachments/assets/3c0b1b5c-9d7d-4e96-a645-e0dc390a50b1)
 - When searching for a card, a max of 10 results will populate the page
+## Your Decks
+![image](https://github.com/user-attachments/assets/39379238-420e-41a3-acd7-b41fd5dece33)
+- This is where the user's decks are displayed.
+- To make a new deck, click the "Create New" link on the top   
+  of the page.
+- Page is subject to change.
 ## Deck Creation Page
-![image](https://github.com/user-attachments/assets/be043ee8-92e5-40a2-8606-6f29a079c910)
+![image](https://github.com/user-attachments/assets/53f08852-3069-4e06-b0ca-c477e823bb64)
+- When the user submits a valid deck, they'll be returned to the   
+  view deck page. 
 ## Helpful Links
 [MTG Api For DotNet](https://github.com/MagicTheGathering/mtg-sdk-dotnet)   
 [Api Documentation](https://docs.magicthegathering.io/)   
