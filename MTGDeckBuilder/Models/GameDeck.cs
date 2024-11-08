@@ -39,7 +39,7 @@ namespace MTGDeckBuilder.Models
         /// <summary>
         /// User that owns the deck
         /// </summary>
-        public UserInventory User { get; set; }
+        public UserInventory Inventory { get; set; }
 
         // Parameterless constructor for model binding
         public GameDeck() { }
