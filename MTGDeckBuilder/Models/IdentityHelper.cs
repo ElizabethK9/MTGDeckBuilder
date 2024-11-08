@@ -47,7 +47,7 @@ namespace MTGDeckBuilder.Models
                 await userManager.AddToRoleAsync(admin, Admin);
 
                 // Create the UserInventory for the admin
-                var userInventory = new UserInventory { IdentityUserId = admin.Id, IdentityUser = admin }; 
+                var userInventory = new UserInventory {User = admin}; 
                 context.UserInventories.Add(userInventory); 
                 await context.SaveChangesAsync();
             }

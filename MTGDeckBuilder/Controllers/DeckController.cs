@@ -26,11 +26,12 @@ namespace MTGDeckBuilder.Controllers
             IdentityUser user = await _userManager.GetUserAsync(User);
 
             // Get all decks made by the current user from the db
-
+            List<GameDeck> allDecks = await (from GameDeck in _context.GameDecks
+                                      where GameDeck.Inventory.IdentityUserId == user.Id
+                                      select GameDeck).ToListAsync();
 
             // Send all user's decks into the view
-
-            return View(); 
+            return View(allDecks); 
         }
 
         [HttpPost]
@@ -57,7 +58,6 @@ namespace MTGDeckBuilder.Controllers
             }
            
             IdentityUser user = await _userManager.GetUserAsync(User);
-
             // Quite possibly redundant code because DeckController is set to [Authorize]
             if (user == null)
             {
@@ -65,8 +65,10 @@ namespace MTGDeckBuilder.Controllers
                 return View(deck);
             }
 
-            UserInventory currentUsersInventory = await _context.UserInventories
-                .FirstOrDefaultAsync(ui => ui.IdentityUserId == user.Id);
+            // Query the UserInventory for the logged-in user using query syntax
+            UserInventory currentUsersInventory = await (from ui in _context.UserInventories
+                                                         where ui.User.Id == user.Id
+                                                         select ui).FirstOrDefaultAsync();
 
             // Quite possibly redundant code because all users should have an inventory,
             // empty or not.
@@ -77,19 +79,19 @@ namespace MTGDeckBuilder.Controllers
             }
 
             currentUsersInventory.AddDeck(_context, deck);
+            await currentUsersInventory.SaveChanges(_context);
 
             try
             {
                 await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Deck created successfully";
+                return RedirectToAction("ViewAllDecks");
             }
             catch (Exception)
             {
                 TempData["ErrorMessage"] = "An error occurred while saving the deck";
-            }
-
-            return View(deck);
+                return View(deck);
+            }   
         }
-
     }
 }
