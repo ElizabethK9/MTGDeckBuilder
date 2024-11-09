@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MTGDeckBuilder.Data;
-
+#nullable disable
 namespace MTGDeckBuilder.Models
 {
     public static class IdentityHelper
@@ -10,7 +10,7 @@ namespace MTGDeckBuilder.Models
 
         public static async Task CreateRoles(IServiceProvider provider, params string[] roles)
         {
-            RoleManager<IdentityRole>? roleManager = provider.GetService<RoleManager<IdentityRole>>();
+            RoleManager<IdentityRole> roleManager = provider.GetService<RoleManager<IdentityRole>>();
 
             foreach(string role in roles)
             {
@@ -29,7 +29,6 @@ namespace MTGDeckBuilder.Models
             var context = provider.GetRequiredService<ApplicationDbContext>();
 
             string adminEmail = "Admin@gmail.com";
-            string adminPassword = "Abc123!";
 
             // Check if the admin user exists
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
@@ -40,7 +39,7 @@ namespace MTGDeckBuilder.Models
                 var admin = new IdentityUser()
                 {
                     Email = "Admin@gmail.com",
-                    UserName = "Admin"
+                    UserName = "Admin"                    
                 };
 
                 await userManager.CreateAsync(admin, "Abc123!");
