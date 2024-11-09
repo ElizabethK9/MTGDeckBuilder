@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using MtgApiManager.Lib.Service;
 using System.ComponentModel.DataAnnotations;
-
+#nullable disable
 namespace MTGDeckBuilder.Models
 {
     /// <summary>
@@ -14,7 +14,7 @@ namespace MTGDeckBuilder.Models
         /// The user's search as a string
         /// </summary>
         [Required]
-        public string? CardName { get; set; }
+        public string CardName { get; set; }
 
         private List<GameCard> _searchResults;
 
