@@ -39,7 +39,7 @@ namespace MTGDeckBuilder.Models
         /// <param name="deck"></param>
         public void RemoveDeck(ApplicationDbContext context, GameDeck deck)
         {
-            // Update User's Deck collection in the db
+            // Remove deck from the db
             context.GameDecks.Remove(deck);
         }
 

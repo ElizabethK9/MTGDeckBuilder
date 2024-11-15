@@ -19,7 +19,6 @@ namespace MTGDeckBuilder.Controllers
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        [HttpGet]
         public async Task<IActionResult> ViewAllDecks() 
         {
             // Get current logged user
@@ -32,14 +31,6 @@ namespace MTGDeckBuilder.Controllers
 
             // Send all user's decks into the view
             return View(allDecks); 
-        }
-
-        [HttpPost]
-        public IActionResult ViewAllDecks(GameDeck deck)
-        {
-            // Create deck logic (check if user clicked the button)
-            // Send User to the deck they clicked (if they clicked an existing deck)
-            return View();
         }
 
         [HttpGet]
@@ -93,5 +84,27 @@ namespace MTGDeckBuilder.Controllers
                 return View(deck);
             }   
         }
+
+        /*
+        [HttpGet]
+        public IActionResult Delete(GameDeck selectedDeck) 
+        {
+            TempData["DeckId"] = selectedDeck.Id;
+            return View(selectedDeck); 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete()
+        {
+            int deckId = Convert.ToInt32(TempData["DeckId"]);
+            UserInventory currentInventory = new UserInventory();
+            GameDeck deckToDelete = await (from d in _context.GameDecks
+                                           where d.Id == deckId
+                                           select d).FirstOrDefaultAsync();
+            currentInventory.RemoveDeck(_context, deckToDelete);
+            await currentInventory.SaveChanges(_context);
+            return RedirectToAction("ViewAllDecks");
+        }
+        */
     }
 }
