@@ -404,3 +404,14 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/MTGDeckBuilder/Properties/ServiceDependencies/MagicDeckBuilder - Zip Deploy/profile.arm.json
+/MTGDeckBuilder/MTGDeckBuilder.csproj.user
+/MTGDeckBuilder/Properties/ServiceDependencies/MTGDeckBuilder20241112230408 - Zip Deploy/profile.arm.json
+/MTGDeckBuilder/Properties/ServiceDependencies/MTGDeckBuilder20241112234754 - Zip Deploy/mssql1.arm.json
+/MTGDeckBuilder/Properties/ServiceDependencies/MTGDeckBuilder20241112234754 - Zip Deploy/profile.arm.json
+/MTGDeckBuilder/Properties/serviceDependencies.json
+/MTGDeckBuilder/Properties/serviceDependencies.local.json
+/MTGDeckBuilder/Properties/serviceDependencies.local.json.user
+/MTGDeckBuilder/Properties/serviceDependencies.MTGDeckBuilder20241112230408 - Zip Deploy.json
+/MTGDeckBuilder/Properties/serviceDependencies.MTGDeckBuilder20241112234754 - Zip Deploy.json
+/MTGDeckBuilder/appsettings.json
