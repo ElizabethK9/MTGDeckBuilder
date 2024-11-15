@@ -85,7 +85,6 @@ namespace MTGDeckBuilder.Controllers
             }   
         }
 
-        /*
         [HttpGet]
         public IActionResult Delete(GameDeck selectedDeck) 
         {
@@ -105,6 +104,5 @@ namespace MTGDeckBuilder.Controllers
             await currentInventory.SaveChanges(_context);
             return RedirectToAction("ViewAllDecks");
         }
-        */
     }
 }
