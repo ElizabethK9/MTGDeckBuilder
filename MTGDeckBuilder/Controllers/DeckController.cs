@@ -19,7 +19,6 @@ namespace MTGDeckBuilder.Controllers
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        [HttpGet]
         public async Task<IActionResult> ViewAllDecks() 
         {
             // Get current logged user
@@ -32,14 +31,6 @@ namespace MTGDeckBuilder.Controllers
 
             // Send all user's decks into the view
             return View(allDecks); 
-        }
-
-        [HttpPost]
-        public IActionResult ViewAllDecks(GameDeck deck)
-        {
-            // Create deck logic (check if user clicked the button)
-            // Send User to the deck they clicked (if they clicked an existing deck)
-            return View();
         }
 
         [HttpGet]
@@ -93,5 +84,71 @@ namespace MTGDeckBuilder.Controllers
                 return View(deck);
             }   
         }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            // Store DeckId in TempData for the POST method
+            TempData["DeckId"] = id;
+            
+            // For display on the delete view
+            GameDeck deck = (from d in _context.GameDecks
+                        where d.Id == id
+                        select d).FirstOrDefault();
+
+            return View(deck);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete()
+        {
+            int deckId = Convert.ToInt32(TempData["DeckId"]);
+
+            // There shouldn't ever be a deck with an id of 0 or below
+            if (deckId < 1)
+            {
+                TempData["ErrorMessage"] = "Deck ID is invalid.";
+                return RedirectToAction("ViewAllDecks");
+            }
+
+            // Fetch the deck to delete and ensure it exists
+            GameDeck deckToDelete = await (from d in _context.GameDecks
+                                      where d.Id == deckId
+                                      select d).FirstOrDefaultAsync();
+
+            if (deckToDelete == null)
+            {
+                TempData["ErrorMessage"] = "Deck not found.";
+                return RedirectToAction("ViewAllDecks");
+            }
+
+            // Fetch the user's inventory
+            IdentityUser user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "User not found.";
+                return RedirectToAction("ViewAllDecks");
+            }
+
+            UserInventory userInventory = await (from ui in _context.UserInventories
+                                       where ui.User.Id == user.Id
+                                       select ui).FirstOrDefaultAsync();
+
+            if (userInventory == null)
+            {
+                TempData["ErrorMessage"] = "User inventory not found.";
+                return RedirectToAction("ViewAllDecks");
+            }
+
+            // Remove deck from db and dereference it from its inventory
+            userInventory.RemoveDeck(_context, deckToDelete);
+
+            // Save deletion change
+            await userInventory.SaveChanges(_context);
+
+            TempData["SuccessMessage"] = "Deck deleted successfully.";
+            return RedirectToAction("ViewAllDecks");
+        }
+
     }
 }

@@ -39,7 +39,10 @@ namespace MTGDeckBuilder.Models
         /// <param name="deck"></param>
         public void RemoveDeck(ApplicationDbContext context, GameDeck deck)
         {
-            // Update User's Deck collection in the db
+            // Dereference the inventory from the deck
+            deck.Inventory = null;
+
+            // Remove deck from the db
             context.GameDecks.Remove(deck);
         }
 
@@ -60,6 +63,9 @@ namespace MTGDeckBuilder.Models
         /// <param name="card"></param>
         public void RemoveCard(ApplicationDbContext context, GameCard card)
         {
+            // Dereference the inventory from the card
+            card.Inventory = null;
+
             // Update User's card collection in the db
             context.GameCards.Remove(card);
         }
