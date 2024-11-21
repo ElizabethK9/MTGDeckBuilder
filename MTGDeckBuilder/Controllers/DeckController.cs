@@ -150,7 +150,8 @@ namespace MTGDeckBuilder.Controllers
             return RedirectToAction("ViewAllDecks");
         }
 
-        public async Task<IActionResult> ViewIndividualDeck(int id)
+        // User can add/remove individual cards to the deck in the post
+        public async Task<IActionResult> Edit(int id)
         {
             // Get deck where deck.id
             GameDeck selectedDeck = await (from d in _context.GameDecks
