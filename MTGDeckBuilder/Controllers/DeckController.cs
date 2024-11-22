@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MTGDeckBuilder.Data;
 using MTGDeckBuilder.Models;
 using Microsoft.EntityFrameworkCore;
+using MtgApiManager.Lib.Service;
 #nullable disable
 namespace MTGDeckBuilder.Controllers
 {
@@ -153,14 +154,67 @@ namespace MTGDeckBuilder.Controllers
         // User can add/remove individual cards to the deck in the post
         public async Task<IActionResult> Edit(int id)
         {
-            // Get deck where deck.id
             GameDeck selectedDeck = await (from d in _context.GameDecks
-                                                         where d.Id == id
-                                                         select d).FirstOrDefaultAsync();
+                                      where d.Id == id
+                                      select d)
+                                      .Include(d => d.Cards) // Cards won't be populated without this
+                                      .FirstOrDefaultAsync();
 
             // Pass in the deck, then display each card in the deck
             return View(selectedDeck);
         }
+        
+        // Called when a card is entered in the Edit view
+        public async Task<IActionResult> AddCardToDeck(int deckId, string cardSearch)
+        {
+            // Get deck where deck.id == deckId
+            GameDeck selectedDeck = await (from d in _context.GameDecks
+                                           where d.Id == deckId
+                                           select d)
+                                      .Include(d => d.Cards) // Cards won't be populated without this
+                                      .FirstOrDefaultAsync();
 
+            // Create card search object to perform api call on it
+            CardSearch search = new CardSearch();
+            search.CardName = cardSearch;
+            await search.PerformCardSearch();
+
+            // Ensure that the search results have at least one card
+            if (search.SearchResults.Count == 0)
+            {
+                TempData["ErrorMessage"] = "No cards found";
+                return RedirectToAction("Edit", selectedDeck);
+            }
+
+            // Copy first search result into an object to avoid nulls
+            GameCard firstCard = search.SearchResults.First();
+            GameCard cardToAdd = new GameCard
+            {
+                MID = firstCard.MID,
+                Name = firstCard.Name,
+                ImageURL = firstCard.ImageURL,
+                Type = firstCard.Type,
+                Set = firstCard.Set
+            };
+
+            // Check if the card already exists in the deck by comparing Name and Set
+            GameCard existingCardInDeck = (from c in selectedDeck.Cards
+                                           where c.Name == cardToAdd.Name && c.Set == cardToAdd.Set
+                                           select c).FirstOrDefault();
+
+            if (existingCardInDeck == null)
+            {
+                selectedDeck.Cards.Add(cardToAdd);
+            }
+            else
+            {
+                // If the card already exists in the deck, increase the Quantity by 1
+                existingCardInDeck.Quantity++;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Edit", selectedDeck);
+        }
     }
 }

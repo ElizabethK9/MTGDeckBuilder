@@ -18,14 +18,26 @@
     </dl>
 </div>
 
+<!-- Search Bar -->
+<form method="post" asp-action="AddCardToDeck" asp-route-deckId="@Model.Id" class="row g-3">
+    <div class="col-md-4">
+        <input type="text" name="cardSearch" class="form-control" placeholder="Search for a card" required />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Add Card</button>
+    </div>
+</form>
+
 <!-- Each Card In The Deck -->
 <h3>Cards in this Deck - @Model.Cards.Count</h3>
 <ul>
     @foreach (var card in Model.Cards)
     {
         <li>
-            @card.Name - @card.Type
-            <button type="submit" asp-action="RemoveCard" asp-route.deckId="@Model.Id" asp-route.cardId="@card.">Remove</button>
+            @card.Name - @card.Type - @card.Quantity
+            <form method="post" asp-action="RemoveCard" asp-route-deckId="@Model.Id" asp-route-cardId="@card.MID">
+                <button type="submit">Remove</button>
+            </form>
         </li>
     }
 </ul>

@@ -64,5 +64,14 @@ namespace MTGDeckBuilder.Models
         {
             Cards.Add(card);
         }
+
+        /// <summary>
+        /// Removes a card from the deck
+        /// </summary>
+        /// <param name="card"></param>
+        public void RemoveCard(GameCard card)
+        {
+            Cards.Remove(card);
+        }
     }
 }

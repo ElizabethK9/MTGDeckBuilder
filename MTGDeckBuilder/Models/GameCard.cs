@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 #nullable disable
 
 namespace MTGDeckBuilder.Models
@@ -72,7 +73,12 @@ namespace MTGDeckBuilder.Models
         /// </summary>
         public string CollectorNumber { get; set; }
 
+        /// <summary>
+        /// A Url to a live image of the card itself
+        /// </summary>
         public string ImageURL { get; set; }
+
+        public int Quantity { get; set; } = 1;
 
         /// <summary>
         /// User that owns the card
@@ -119,6 +125,17 @@ namespace MTGDeckBuilder.Models
         public GameCard(string cardName) 
         {
             this.Name=cardName;
+        }
+
+        // Constructor for adding cards to decks in the DeckController
+        public GameCard(string cardMID, string cardName, string cardImageUrl,
+                        string cardType, string cardSet)
+        {
+            this.MID = cardMID;
+            this.Name = cardName;
+            this.ImageURL = cardImageUrl;
+            this.Type = cardType;
+            this.Set = cardSet;
         }
     }
 }
