@@ -115,7 +115,9 @@ namespace MTGDeckBuilder.Controllers
             // Fetch the deck to delete and ensure it exists
             GameDeck deckToDelete = await (from d in _context.GameDecks
                                       where d.Id == deckId
-                                      select d).FirstOrDefaultAsync();
+                                      select d)
+                                      .Include(d => d.Cards) // Cards won't be populated without this
+                                      .FirstOrDefaultAsync();
 
             if (deckToDelete == null)
             {
@@ -164,7 +166,7 @@ namespace MTGDeckBuilder.Controllers
             return View(selectedDeck);
         }
         
-        // Called when a card is entered in the Edit view
+        // Adds a card to the deck
         public async Task<IActionResult> AddCardToDeck(int deckId, string cardSearch)
         {
             // Get deck where deck.id == deckId
@@ -186,8 +188,10 @@ namespace MTGDeckBuilder.Controllers
                 return RedirectToAction("Edit", selectedDeck);
             }
 
-            // Copy first search result into an object to avoid nulls
+            // First search results in object form with EVERY property
             GameCard firstCard = search.SearchResults.First();
+
+            // Finished product
             GameCard cardToAdd = new GameCard
             {
                 MID = firstCard.MID,
@@ -199,12 +203,27 @@ namespace MTGDeckBuilder.Controllers
 
             // Check if the card already exists in the deck by comparing Name and Set
             GameCard existingCardInDeck = (from c in selectedDeck.Cards
-                                           where c.Name == cardToAdd.Name && c.Set == cardToAdd.Set
+                                           where c.MID == cardToAdd.MID
                                            select c).FirstOrDefault();
 
+            // Check if card exists in the db or not
+            GameCard existingCardInDb = (from c in _context.GameCards
+                             where c.MID == cardToAdd.MID
+                             select c).FirstOrDefault();
+
+            // This code is to avoid inserting duplicate rows
             if (existingCardInDeck == null)
             {
-                selectedDeck.Cards.Add(cardToAdd);
+                if (existingCardInDb == null)
+                {
+                    cardToAdd.Quantity = 1;
+                    selectedDeck.Cards.Add(cardToAdd);
+                }
+                else // Exists in the db but not the deck
+                {
+                    existingCardInDb.Quantity = 1;
+                    selectedDeck.Cards.Add(existingCardInDb);
+                }
             }
             else
             {

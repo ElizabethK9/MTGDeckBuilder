@@ -63,6 +63,7 @@ namespace MTGDeckBuilder.Models
         public void AddCard(GameCard card)
         {
             Cards.Add(card);
+            card.GameDeckId = this.Id;
         }
 
         /// <summary>

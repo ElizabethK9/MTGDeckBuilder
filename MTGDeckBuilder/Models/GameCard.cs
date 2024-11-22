@@ -19,6 +19,14 @@ namespace MTGDeckBuilder.Models
         [Key]
         public string MID { get; set; }
 
+        // Foreign key to gamedeck
+        public int? GameDeckId { get; set; }
+
+        /// <summary>
+        /// Foreign key to user's inventory
+        /// </summary>
+        public UserInventory Inventory { get; set; }
+
         /// <summary>
         /// Fullname of the card
         /// </summary>
@@ -78,12 +86,7 @@ namespace MTGDeckBuilder.Models
         /// </summary>
         public string ImageURL { get; set; }
 
-        public int Quantity { get; set; } = 1;
-
-        /// <summary>
-        /// User that owns the card
-        /// </summary>
-        public UserInventory Inventory { get; set; }
+        public int Quantity { get; set; }
 
         // Parameterless constructor
         public GameCard() { }
