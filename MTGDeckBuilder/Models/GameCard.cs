@@ -61,11 +61,6 @@ namespace MTGDeckBuilder.Models
         public string Set { get; set; }
 
         /// <summary>
-        /// Will be implemented in the future when the site is more fleshed out.
-        /// </summary>
-        public int Price { get; set; }
-
-        /// <summary>
         /// Int value for the attacking power of the card if it's a creature. Can include 0.
         /// </summary>
         public string CreaturePower { get; set; }
@@ -85,8 +80,6 @@ namespace MTGDeckBuilder.Models
         /// A Url to a live image of the card itself
         /// </summary>
         public string ImageURL { get; set; }
-
-        public int Quantity { get; set; }
 
         // Parameterless constructor
         public GameCard() { }

@@ -29,9 +29,11 @@ namespace MTGDeckBuilder.Models
         /// <param name="deck"></param>
         public void AddDeck(ApplicationDbContext context, GameDeck deck)
         {
-            // Update User's card collection in the db
+            // Dereference the inventory and cards from the deck
             deck.Inventory = this;
+
             context.GameDecks.Add(deck);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -42,12 +44,14 @@ namespace MTGDeckBuilder.Models
         {
             // Dereference the inventory and cards from the deck 
             deck.Inventory = null;
-            foreach (GameCard card in deck.Cards)
-            {
-                card.GameDeckId = null;
-            }
 
+            // Remove associated DeckCards
+            foreach (DeckCard deckCard in deck.DeckCards.ToList())
+            {
+                context.DeckCards.Remove(deckCard);
+            }
             context.GameDecks.Remove(deck);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -55,10 +59,12 @@ namespace MTGDeckBuilder.Models
         /// </summary>
         /// <param name="card"></param>
         public void AddCard(ApplicationDbContext context, GameCard card)
-        {           
-            // Update User's card collection in the db
+        {
+            // Dereference the inventory from the card
             card.Inventory = this;
+
             context.GameCards.Add(card);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -70,8 +76,49 @@ namespace MTGDeckBuilder.Models
             // Dereference the inventory from the card
             card.Inventory = null;
 
-            // Update User's card collection in the db
             context.GameCards.Remove(card);
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Adds a card to a specific deck in the current user's collection
+        /// </summary>
+        /// <param name="deck"></param>
+        /// <param name="card"></param>
+        public void AddCardToDeck(ApplicationDbContext context, GameDeck deck, GameCard card)
+        {
+            // Associate the deck with this inventory
+            deck.Inventory = this;
+
+            // Create a new DeckCard if it doesnt already exist
+            DeckCard deckCard = new DeckCard
+            {
+                GameDeckId = deck.Id,
+                GameCardMID = card.MID,
+                Quantity = 1
+            };
+
+            context.DeckCards.Add(deckCard);
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Removes a card from a specific deck in the current user's collection
+        /// </summary>
+        /// <param name="deck"></param>
+        /// <param name="card"></param>
+        public void RemoveCardFromDeck(ApplicationDbContext context, GameDeck deck, GameCard card)
+        {
+            // Find the deckcard where the MID's and Deck Id's are equal
+            DeckCard deckCard = (from dc in context.DeckCards
+                                 where dc.GameDeckId == deck.Id && dc.GameCardMID == card.MID
+                                 select dc).FirstOrDefault();
+
+            if (deckCard != null)
+            {
+                context.DeckCards.Remove(deckCard);
+                context.SaveChanges();
+            }
         }
 
         /// <summary>
