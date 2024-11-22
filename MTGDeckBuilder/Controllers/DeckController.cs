@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MTGDeckBuilder.Data;
 using MTGDeckBuilder.Models;
 using Microsoft.EntityFrameworkCore;
+using MtgApiManager.Lib.Service;
 #nullable disable
 namespace MTGDeckBuilder.Controllers
 {
@@ -114,7 +115,9 @@ namespace MTGDeckBuilder.Controllers
             // Fetch the deck to delete and ensure it exists
             GameDeck deckToDelete = await (from d in _context.GameDecks
                                       where d.Id == deckId
-                                      select d).FirstOrDefaultAsync();
+                                      select d)
+                                      .Include(d => d.Cards) // Cards won't be populated without this
+                                      .FirstOrDefaultAsync();
 
             if (deckToDelete == null)
             {
@@ -150,16 +153,87 @@ namespace MTGDeckBuilder.Controllers
             return RedirectToAction("ViewAllDecks");
         }
 
-        public async Task<IActionResult> ViewIndividualDeck(int id)
+        // User can add/remove individual cards to the deck in the post
+        public async Task<IActionResult> Edit(int id)
         {
-            // Get deck where deck.id
             GameDeck selectedDeck = await (from d in _context.GameDecks
-                                                         where d.Id == id
-                                                         select d).FirstOrDefaultAsync();
+                                      where d.Id == id
+                                      select d)
+                                      .Include(d => d.Cards) // Cards won't be populated without this
+                                      .FirstOrDefaultAsync();
 
             // Pass in the deck, then display each card in the deck
             return View(selectedDeck);
         }
+        
+        // Adds a card to the deck
+        public async Task<IActionResult> AddCardToDeck(int deckId, string cardSearch)
+        {
+            // Get deck where deck.id == deckId
+            GameDeck selectedDeck = await (from d in _context.GameDecks
+                                           where d.Id == deckId
+                                           select d)
+                                      .Include(d => d.Cards) // Cards won't be populated without this
+                                      .FirstOrDefaultAsync();
 
+            // Create card search object to perform api call on it
+            CardSearch search = new CardSearch();
+            search.CardName = cardSearch;
+            await search.PerformCardSearch();
+
+            // Ensure that the search results have at least one card
+            if (search.SearchResults.Count == 0)
+            {
+                TempData["ErrorMessage"] = "No cards found";
+                return RedirectToAction("Edit", selectedDeck);
+            }
+
+            // First search results in object form with EVERY property
+            GameCard firstCard = search.SearchResults.First();
+
+            // Finished product
+            GameCard cardToAdd = new GameCard
+            {
+                MID = firstCard.MID,
+                Name = firstCard.Name,
+                ImageURL = firstCard.ImageURL,
+                Type = firstCard.Type,
+                Set = firstCard.Set
+            };
+
+            // Check if the card already exists in the deck by comparing Name and Set
+            GameCard existingCardInDeck = (from c in selectedDeck.Cards
+                                           where c.MID == cardToAdd.MID
+                                           select c).FirstOrDefault();
+
+            // Check if card exists in the db or not
+            GameCard existingCardInDb = (from c in _context.GameCards
+                             where c.MID == cardToAdd.MID
+                             select c).FirstOrDefault();
+
+            // This code is to avoid inserting duplicate rows
+            if (existingCardInDeck == null)
+            {
+                if (existingCardInDb == null)
+                {
+                    cardToAdd.Quantity = 1;
+                    selectedDeck.Cards.Add(cardToAdd);
+                }
+                else // Exists in the db but not the deck
+                {
+                    existingCardInDb.Quantity = 1;
+                    selectedDeck.Cards.Add(existingCardInDb);
+                }
+            }
+            else
+            {
+                // If the card already exists in the deck, increase the Quantity by 1
+                existingCardInDeck.Quantity++;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Edit", selectedDeck);
+        }
     }
 }

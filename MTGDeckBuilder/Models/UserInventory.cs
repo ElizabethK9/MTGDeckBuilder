@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using MtgApiManager.Lib.Model;
 using MTGDeckBuilder.Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -39,10 +40,13 @@ namespace MTGDeckBuilder.Models
         /// <param name="deck"></param>
         public void RemoveDeck(ApplicationDbContext context, GameDeck deck)
         {
-            // Dereference the inventory from the deck
+            // Dereference the inventory and cards from the deck 
             deck.Inventory = null;
+            foreach (GameCard card in deck.Cards)
+            {
+                card.GameDeckId = null;
+            }
 
-            // Remove deck from the db
             context.GameDecks.Remove(deck);
         }
 
