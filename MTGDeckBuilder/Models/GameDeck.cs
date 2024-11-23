@@ -53,24 +53,5 @@ namespace MTGDeckBuilder.Models
             this.DeckName = deckName;
             this.DeckFormat = deckFormat;
         }
-
-        /// <summary>
-        /// Adds a card to the deck
-        /// </summary>
-        /// <param name="card"></param>
-        public void AddCard(GameCard card)
-        {
-            Cards.Add(card);
-            card.GameDeckId = this.Id;
-        }
-
-        /// <summary>
-        /// Removes a card from the deck
-        /// </summary>
-        /// <param name="card"></param>
-        public void RemoveCard(GameCard card)
-        {
-            Cards.Remove(card);
-        }
     }
 }
