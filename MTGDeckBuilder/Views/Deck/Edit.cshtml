@@ -19,7 +19,7 @@
 </div>
 
 <!-- Search Bar -->
-<form method="post" asp-action="AddCardToDeck" asp-route-deckId="@Model.Id" class="row g-3">
+<form method="post" asp-action="Edit" asp-route-deckId="@Model.Id" class="row g-3">
     <div class="col-md-4">
         <input type="text" name="cardSearch" class="form-control" placeholder="Search for a card" required />
     </div>
@@ -29,13 +29,13 @@
 </form>
 
 <!-- Each Card In The Deck -->
-<h3>Cards in this Deck - @Model.Cards.Count</h3>
+<h3>Cards in this Deck - @Model.DeckCards.Count</h3>
 <ul>
-    @foreach (var card in Model.Cards)
+    @foreach (DeckCard card in Model.DeckCards)
     {
         <li>
-            @card.Name - @card.Type - @card.Quantity
-            <form method="post" asp-action="RemoveCard" asp-route-deckId="@Model.Id" asp-route-cardId="@card.MID">
+            @card.GameCard.Name - @card.GameCard.Subtype - @card.Quantity
+            <form method="post" asp-action="RemoveCard" asp-route-deckId="@Model.Id" asp-route-cardId="@card.GameCard.MID">
                 <button type="submit">Remove</button>
             </form>
         </li>
