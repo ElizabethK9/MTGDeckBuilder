@@ -130,7 +130,6 @@ namespace MTGDeckBuilder.Controllers
             }
         }
 
-        // User can add/remove individual cards to the deck in the post
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
