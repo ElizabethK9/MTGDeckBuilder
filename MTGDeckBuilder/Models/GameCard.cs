@@ -19,9 +19,6 @@ namespace MTGDeckBuilder.Models
         [Key]
         public string MID { get; set; }
 
-        // Foreign key to gamedeck
-        public int? GameDeckId { get; set; }
-
         /// <summary>
         /// Foreign key to user's inventory
         /// </summary>
@@ -125,12 +122,12 @@ namespace MTGDeckBuilder.Models
 
         // Constructor for adding cards to decks in the DeckController
         public GameCard(string cardMID, string cardName, string cardImageUrl,
-                        string cardType, string cardSet)
+                        string cardSubType, string cardSet)
         {
             this.MID = cardMID;
             this.Name = cardName;
             this.ImageURL = cardImageUrl;
-            this.Type = cardType;
+            this.Subtype = cardSubType;
             this.Set = cardSet;
         }
     }
