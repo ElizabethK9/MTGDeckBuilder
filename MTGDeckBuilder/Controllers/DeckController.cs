@@ -5,6 +5,7 @@ using MTGDeckBuilder.Data;
 using MTGDeckBuilder.Models;
 using Microsoft.EntityFrameworkCore;
 using MtgApiManager.Lib.Service;
+using System.Runtime.InteropServices;
 #nullable disable
 namespace MTGDeckBuilder.Controllers
 {
@@ -153,6 +154,12 @@ namespace MTGDeckBuilder.Controllers
                                                    .ThenInclude(dc => dc.GameCard)
                                                    .FirstOrDefaultAsync(d => d.Id == deckId);
 
+            if (selectedDeck == null)
+            {
+                TempData["ErrorMessage"] = "Deck not found.";
+                return RedirectToAction("ViewAllDecks");
+            }
+
             // Create card search object to perform api call on it
             CardSearch search = new CardSearch();
             search.CardName = cardSearch;
@@ -165,31 +172,56 @@ namespace MTGDeckBuilder.Controllers
                 return RedirectToAction("Edit", selectedDeck);
             }
 
-            // Take the first result and turn it into a DeckCard object to be stored in a  deck
+            // Take the first result and add it to the db if it doesn't exist
             GameCard firstCard = search.SearchResults.First();
-            DeckCard deckCardToAdd = (from dc in selectedDeck.DeckCards
-                                      where dc.GameCardMID == firstCard.MID
-                                      select dc)
-                                      .FirstOrDefault();
+            GameCard cardToAdd = (from c in _context.GameCards
+                                  where c.MID == firstCard.MID
+                                  select c).FirstOrDefault();
 
+            if (cardToAdd == null)
+            {
+                // Card does not exist, so add it
+                cardToAdd = new GameCard
+                {
+                    MID = firstCard.MID,
+                    Name = firstCard.Name,
+                    ImageURL = firstCard.ImageURL,
+                    Subtype = firstCard.Subtype,
+                    Set = firstCard.Set
+                };
+
+                _context.GameCards.Add(cardToAdd);
+                await _context.SaveChangesAsync();
+            }
+
+            // Add the GameCard to the GameDeck using DeckCard object
             try
             {
-                if (deckCardToAdd == null)
+                // Check if the card is already in the deck
+                DeckCard existingDeckCard = (from dc in selectedDeck.DeckCards
+                                             where dc.GameCardMID == cardToAdd.MID
+                                             select dc).FirstOrDefault();
+
+                if (existingDeckCard == null)
                 {
-                    // If the card does not exist in the deck, create a new DeckCard and set quantity to 1
+                    // Card does not exist in the deck, so add it
                     DeckCard newDeckCard = new DeckCard
                     {
                         GameDeckId = selectedDeck.Id,
-                        GameCardMID = firstCard.MID,
+                        GameCardMID = cardToAdd.MID,
                         Quantity = 1
                     };
-                    selectedDeck.DeckCards.Add(newDeckCard);
+
+                    _context.DeckCards.Add(newDeckCard);
                 }
                 else
                 {
-                    // If the card already exists in the deck, increment its quantity
-                    deckCardToAdd.Quantity++;
+                    // Card exists in the deck, so just increment the quantity
+                    existingDeckCard.Quantity++;
                 }
+
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction("Edit", selectedDeck);
             }
             catch (Exception ex)
