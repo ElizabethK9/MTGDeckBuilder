@@ -19,6 +19,9 @@ namespace MTGDeckBuilder.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Define relationship between DeckCard and the GameDeck/GameCard models
+            modelBuilder.Entity<DeckCard>().HasKey("GameDeckId", "GameCardMID");
         }
     }
 }
