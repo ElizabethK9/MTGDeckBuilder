@@ -19,9 +19,6 @@ namespace MTGDeckBuilder.Models
         [Key]
         public string MID { get; set; }
 
-        // Foreign key to gamedeck
-        public int? GameDeckId { get; set; }
-
         /// <summary>
         /// Foreign key to user's inventory
         /// </summary>
@@ -61,11 +58,6 @@ namespace MTGDeckBuilder.Models
         public string Set { get; set; }
 
         /// <summary>
-        /// Will be implemented in the future when the site is more fleshed out.
-        /// </summary>
-        public int Price { get; set; }
-
-        /// <summary>
         /// Int value for the attacking power of the card if it's a creature. Can include 0.
         /// </summary>
         public string CreaturePower { get; set; }
@@ -85,8 +77,6 @@ namespace MTGDeckBuilder.Models
         /// A Url to a live image of the card itself
         /// </summary>
         public string ImageURL { get; set; }
-
-        public int Quantity { get; set; }
 
         // Parameterless constructor
         public GameCard() { }
@@ -132,12 +122,12 @@ namespace MTGDeckBuilder.Models
 
         // Constructor for adding cards to decks in the DeckController
         public GameCard(string cardMID, string cardName, string cardImageUrl,
-                        string cardType, string cardSet)
+                        string cardSubType, string cardSet)
         {
             this.MID = cardMID;
             this.Name = cardName;
             this.ImageURL = cardImageUrl;
-            this.Type = cardType;
+            this.Subtype = cardSubType;
             this.Set = cardSet;
         }
     }

@@ -32,14 +32,12 @@ namespace MTGDeckBuilder.Models
         public string DeckFormat { get; set; }
 
         /// <summary>
-        /// Collection of all the cards in the deck
-        /// </summary>
-        public List<GameCard> Cards { get; set; } = new List<GameCard>();
-
-        /// <summary>
         /// User that owns the deck
         /// </summary>
         public UserInventory Inventory { get; set; }
+
+        // This is the list of cards associated with the deck
+        public ICollection<DeckCard> DeckCards { get; set; }
 
         // Parameterless constructor for model binding
         public GameDeck() { }
@@ -54,25 +52,6 @@ namespace MTGDeckBuilder.Models
         {
             this.DeckName = deckName;
             this.DeckFormat = deckFormat;
-        }
-
-        /// <summary>
-        /// Adds a card to the deck
-        /// </summary>
-        /// <param name="card"></param>
-        public void AddCard(GameCard card)
-        {
-            Cards.Add(card);
-            card.GameDeckId = this.Id;
-        }
-
-        /// <summary>
-        /// Removes a card from the deck
-        /// </summary>
-        /// <param name="card"></param>
-        public void RemoveCard(GameCard card)
-        {
-            Cards.Remove(card);
         }
     }
 }

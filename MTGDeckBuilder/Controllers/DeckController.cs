@@ -5,6 +5,7 @@ using MTGDeckBuilder.Data;
 using MTGDeckBuilder.Models;
 using Microsoft.EntityFrameworkCore;
 using MtgApiManager.Lib.Service;
+using System.Runtime.InteropServices;
 #nullable disable
 namespace MTGDeckBuilder.Controllers
 {
@@ -70,12 +71,9 @@ namespace MTGDeckBuilder.Controllers
                 return View(deck);
             }
 
-            currentUsersInventory.AddDeck(_context, deck);
-            await currentUsersInventory.SaveChanges(_context);
-
             try
             {
-                await _context.SaveChangesAsync();
+                currentUsersInventory.AddDeck(_context, deck);
                 TempData["SuccessMessage"] = "Deck created successfully";
                 return RedirectToAction("ViewAllDecks");
             }
@@ -105,76 +103,61 @@ namespace MTGDeckBuilder.Controllers
         {
             int deckId = Convert.ToInt32(TempData["DeckId"]);
 
-            // There shouldn't ever be a deck with an id of 0 or below
-            if (deckId < 1)
-            {
-                TempData["ErrorMessage"] = "Deck ID is invalid.";
-                return RedirectToAction("ViewAllDecks");
-            }
-
             // Fetch the deck to delete and ensure it exists
             GameDeck deckToDelete = await (from d in _context.GameDecks
                                       where d.Id == deckId
                                       select d)
-                                      .Include(d => d.Cards) // Cards won't be populated without this
+                                      .Include(d => d.DeckCards) // Cards won't be populated without this
                                       .FirstOrDefaultAsync();
-
-            if (deckToDelete == null)
-            {
-                TempData["ErrorMessage"] = "Deck not found.";
-                return RedirectToAction("ViewAllDecks");
-            }
 
             // Fetch the user's inventory
             IdentityUser user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                TempData["ErrorMessage"] = "User not found.";
-                return RedirectToAction("ViewAllDecks");
-            }
-
             UserInventory userInventory = await (from ui in _context.UserInventories
                                        where ui.User.Id == user.Id
                                        select ui).FirstOrDefaultAsync();
 
-            if (userInventory == null)
+            try
             {
-                TempData["ErrorMessage"] = "User inventory not found.";
+                // Remove deck from db and dereference it from its inventory
+                userInventory.RemoveDeck(_context, deckToDelete);
+                TempData["SuccessMessage"] = "Deck deleted successfully.";
                 return RedirectToAction("ViewAllDecks");
             }
-
-            // Remove deck from db and dereference it from its inventory
-            userInventory.RemoveDeck(_context, deckToDelete);
-
-            // Save deletion change
-            await userInventory.SaveChanges(_context);
-
-            TempData["SuccessMessage"] = "Deck deleted successfully.";
-            return RedirectToAction("ViewAllDecks");
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "An error occurred while deleting the deck";
+                return View(deckToDelete);
+            }
         }
 
-        // User can add/remove individual cards to the deck in the post
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            GameDeck selectedDeck = await (from d in _context.GameDecks
-                                      where d.Id == id
-                                      select d)
-                                      .Include(d => d.Cards) // Cards won't be populated without this
-                                      .FirstOrDefaultAsync();
+            GameDeck selectedDeck = await _context.GameDecks
+                                                  .Where(d => d.Id == id)
+                                                  .Include(d => d.DeckCards) // Include all cards associated with the deck
+                                                  .ThenInclude(dc => dc.GameCard)
+                                                  .FirstOrDefaultAsync();
 
             // Pass in the deck, then display each card in the deck
             return View(selectedDeck);
         }
-        
+
         // Adds a card to the deck
-        public async Task<IActionResult> AddCardToDeck(int deckId, string cardSearch)
+        [HttpPost]
+        public async Task<IActionResult> Edit(int deckId, string cardSearch)
         {
-            // Get deck where deck.id == deckId
-            GameDeck selectedDeck = await (from d in _context.GameDecks
-                                           where d.Id == deckId
-                                           select d)
-                                      .Include(d => d.Cards) // Cards won't be populated without this
-                                      .FirstOrDefaultAsync();
+            // Get the selected deck and its cards
+            GameDeck selectedDeck = await _context.GameDecks
+                                                   .Include(d => d.DeckCards)
+                                                   .ThenInclude(dc => dc.GameCard)
+                                                   .FirstOrDefaultAsync(d => d.Id == deckId);
+
+            if (selectedDeck == null)
+            {
+                TempData["ErrorMessage"] = "Deck not found.";
+                return RedirectToAction("ViewAllDecks");
+            }
 
             // Create card search object to perform api call on it
             CardSearch search = new CardSearch();
@@ -188,52 +171,63 @@ namespace MTGDeckBuilder.Controllers
                 return RedirectToAction("Edit", selectedDeck);
             }
 
-            // First search results in object form with EVERY property
+            // Take the first result and add it to the db if it doesn't exist
             GameCard firstCard = search.SearchResults.First();
+            GameCard cardToAdd = (from c in _context.GameCards
+                                  where c.MID == firstCard.MID
+                                  select c).FirstOrDefault();
 
-            // Finished product
-            GameCard cardToAdd = new GameCard
+            if (cardToAdd == null)
             {
-                MID = firstCard.MID,
-                Name = firstCard.Name,
-                ImageURL = firstCard.ImageURL,
-                Type = firstCard.Type,
-                Set = firstCard.Set
-            };
-
-            // Check if the card already exists in the deck by comparing Name and Set
-            GameCard existingCardInDeck = (from c in selectedDeck.Cards
-                                           where c.MID == cardToAdd.MID
-                                           select c).FirstOrDefault();
-
-            // Check if card exists in the db or not
-            GameCard existingCardInDb = (from c in _context.GameCards
-                             where c.MID == cardToAdd.MID
-                             select c).FirstOrDefault();
-
-            // This code is to avoid inserting duplicate rows
-            if (existingCardInDeck == null)
-            {
-                if (existingCardInDb == null)
+                // Card does not exist, so add it
+                cardToAdd = new GameCard
                 {
-                    cardToAdd.Quantity = 1;
-                    selectedDeck.Cards.Add(cardToAdd);
-                }
-                else // Exists in the db but not the deck
-                {
-                    existingCardInDb.Quantity = 1;
-                    selectedDeck.Cards.Add(existingCardInDb);
-                }
-            }
-            else
-            {
-                // If the card already exists in the deck, increase the Quantity by 1
-                existingCardInDeck.Quantity++;
+                    MID = firstCard.MID,
+                    Name = firstCard.Name,
+                    ImageURL = firstCard.ImageURL,
+                    Subtype = firstCard.Subtype,
+                    Set = firstCard.Set
+                };
+
+                _context.GameCards.Add(cardToAdd);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
+            // Add the GameCard to the GameDeck using DeckCard object
+            try
+            {
+                // Check if the card is already in the deck
+                DeckCard existingDeckCard = (from dc in selectedDeck.DeckCards
+                                             where dc.GameCardMID == cardToAdd.MID
+                                             select dc).FirstOrDefault();
 
-            return RedirectToAction("Edit", selectedDeck);
+                if (existingDeckCard == null)
+                {
+                    // Card does not exist in the deck, so add it
+                    DeckCard newDeckCard = new DeckCard
+                    {
+                        GameDeckId = selectedDeck.Id,
+                        GameCardMID = cardToAdd.MID,
+                        Quantity = 1
+                    };
+
+                    _context.DeckCards.Add(newDeckCard);
+                }
+                else
+                {
+                    // Card exists in the deck, so just increment the quantity
+                    existingDeckCard.Quantity++;
+                }
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Edit", selectedDeck);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An error occurred while adding the card to the deck.";
+                return RedirectToAction("Edit", selectedDeck);
+            }
         }
     }
 }
