@@ -1,6 +1,7 @@
-﻿namespace MTGDeckBuilder.Models
+﻿#nullable disable
+namespace MTGDeckBuilder.Models
 {
-    // This model allows us to track how many cards are in each deck
+    // This model allows us to track how many cards are in each deck    
     public class DeckCard
     {
         public int GameDeckId { get; set; }
