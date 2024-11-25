@@ -43,6 +43,10 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+app.MapControllerRoute(
+    name: "resources",
+    pattern: "{controller=Resources}/{action=ResourcesView}/{id?}");
+
 IServiceScope serviceProvider = app.Services.GetRequiredService<IServiceProvider>().CreateScope();
 
 // Comment out these lines after bootstrapping the db
