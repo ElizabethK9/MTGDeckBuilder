@@ -48,9 +48,9 @@ IServiceScope serviceProvider = app.Services.GetRequiredService<IServiceProvider
 // Comment out these lines after bootstrapping the db
 
 // Create roles
-//await IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper.GeneralUser, IdentityHelper.Admin);
+await IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper.GeneralUser, IdentityHelper.Admin);
 
 //Create admin user if it doesnt exist 
-//await IdentityHelper.CreateAdmin(serviceProvider.ServiceProvider);
+await IdentityHelper.CreateAdmin(serviceProvider.ServiceProvider);
 
 app.Run();
