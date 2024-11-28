@@ -184,9 +184,14 @@ namespace MTGDeckBuilder.Controllers
                 {
                     MID = firstCard.MID,
                     Name = firstCard.Name,
-                    ImageURL = firstCard.ImageURL,
+                    Type = firstCard.Type,
                     Subtype = firstCard.Subtype,
-                    Set = firstCard.Set
+                    ManaCost = firstCard.ManaCost,
+                    Set = firstCard.Set,
+                    CreaturePower = firstCard.CreaturePower,
+                    CreatureToughness = firstCard.CreatureToughness,
+                    CollectorNumber = firstCard.CollectorNumber,
+                    ImageURL = firstCard.ImageURL, 
                 };
 
                 _context.GameCards.Add(cardToAdd);
