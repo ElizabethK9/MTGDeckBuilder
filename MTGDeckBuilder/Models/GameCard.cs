@@ -20,11 +20,6 @@ namespace MTGDeckBuilder.Models
         public string MID { get; set; }
 
         /// <summary>
-        /// Foreign key to user's inventory
-        /// </summary>
-        public UserInventory Inventory { get; set; }
-
-        /// <summary>
         /// Fullname of the card
         /// </summary>
         [Required]
