@@ -34,9 +34,9 @@
     @foreach (DeckCard card in Model.DeckCards)
     {
         <li>
-            @card.GameCard.Name - @card.GameCard.Subtype - @card.Quantity
-            <form method="post" asp-action="RemoveCard" asp-route-deckId="@Model.Id" asp-route-cardId="@card.GameCard.MID">
-                <button type="submit">Remove</button>
+            @card.GameCard.Name - @card.GameCard.Type - @card.Quantity
+            <form method="post" asp-action="RemoveCardFromDeck" asp-route-deckId="@Model.Id" asp-route-cardId="@card.GameCard.MID">
+                <button class="btn btn-primary" type="submit">Remove</button>
             </form>
         </li>
     }

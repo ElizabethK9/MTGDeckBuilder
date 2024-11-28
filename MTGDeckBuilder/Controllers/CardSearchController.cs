@@ -7,7 +7,7 @@ using MTGDeckBuilder.Models;
 #nullable disable
 namespace MTGDeckBuilder.Controllers
 {
-    public class CardController : Controller
+    public class CardSearchController : Controller
     {
         [HttpGet]
         public ActionResult CardSearch()
