@@ -143,7 +143,6 @@ namespace MTGDeckBuilder.Controllers
             return View(selectedDeck);
         }
 
-        // Adds a card to the deck
         [HttpPost]
         public async Task<IActionResult> Edit(int deckId, string cardSearch)
         {
@@ -228,11 +227,37 @@ namespace MTGDeckBuilder.Controllers
 
                 return RedirectToAction("Edit", selectedDeck);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 TempData["ErrorMessage"] = "An error occurred while adding the card to the deck.";
                 return RedirectToAction("Edit", selectedDeck);
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveCardFromDeck(int deckId, string cardId)
+        {
+            GameDeck currentDeck = await _context.GameDecks
+                                                  .Where(d => d.Id == deckId)
+                                                  .Include(d => d.DeckCards) // Include all cards associated with the deck
+                                                  .ThenInclude(dc => dc.GameCard)
+                                                  .FirstOrDefaultAsync();
+
+            DeckCard existingDeckCard = (from dc in currentDeck.DeckCards
+                                         where dc.GameCardMID == cardId
+                                         select dc).FirstOrDefault();
+
+            if (existingDeckCard.Quantity > 1)
+            {
+                existingDeckCard.Quantity--;
+            }
+            else // If there is only 1 card and we want to remove a card, remove it from the db
+            {
+                _context.DeckCards.Remove(existingDeckCard);
+            }
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Edit", new { id = deckId });
         }
     }
 }
