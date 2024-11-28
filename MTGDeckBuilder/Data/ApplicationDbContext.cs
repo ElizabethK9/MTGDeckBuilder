@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MTGDeckBuilder.Models;
+#nullable disable
 
 namespace MTGDeckBuilder.Data
 {
