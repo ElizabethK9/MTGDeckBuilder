@@ -29,15 +29,25 @@
 </form>
 
 <!-- Each Card In The Deck -->
-<h3>Cards in this Deck - @Model.DeckCards.Count</h3>
-<ul>
+<h3>Cards in this Deck - @Model.DeckCards.Sum(card => card.Quantity)</h3>
+<ul style ="list-style-type: none;">
     @foreach (DeckCard card in Model.DeckCards)
     {
         <li>
-            @card.GameCard.Name - @card.GameCard.Type - @card.Quantity
-            <form method="post" asp-action="RemoveCardFromDeck" asp-route-deckId="@Model.Id" asp-route-cardId="@card.GameCard.MID">
-                <button class="btn btn-primary" type="submit">Remove</button>
-            </form>
+            <div class="card" style="width: 18rem; margin: 1rem; text-align:center">
+                <img src="@card.GameCard.ImageURL" class="card-img-top" alt="@card.GameCard.Name @card.GameCard.Set">
+                <div class="card-body">
+                    <h5 class="card-title">@card.GameCard.Name X @card.Quantity</h5>
+                    <div class="d-flex justify-content-between">
+                        <form method="post" asp-action="AddCardToDeck" asp-route-deckId="@Model.Id" asp-route-cardId="@card.GameCard.MID">
+                            <button class="btn btn-primary w-48" type="submit">Add to Deck</button>
+                        </form>
+                        <form method="post" asp-action="RemoveCardFromDeck" asp-route-deckId="@Model.Id" asp-route-cardId="@card.GameCard.MID">
+                            <button class="btn btn-danger w-48" type="submit">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>  
         </li>
     }
 </ul>

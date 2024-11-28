@@ -259,5 +259,25 @@ namespace MTGDeckBuilder.Controllers
 
             return RedirectToAction("Edit", new { id = deckId });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCardToDeck(int deckId, string cardId)
+        {
+            GameDeck currentDeck = await _context.GameDecks
+                                                  .Where(d => d.Id == deckId)
+                                                  .Include(d => d.DeckCards) // Include all cards associated with the deck
+                                                  .ThenInclude(dc => dc.GameCard)
+                                                  .FirstOrDefaultAsync();
+
+            DeckCard existingDeckCard = (from dc in currentDeck.DeckCards
+                                         where dc.GameCardMID == cardId
+                                         select dc).FirstOrDefault();
+
+            existingDeckCard.Quantity++;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Edit", new { id = deckId });
+        }
     }
 }
