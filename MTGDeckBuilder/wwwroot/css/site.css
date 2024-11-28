@@ -3,9 +3,9 @@ html {
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    } 
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -34,9 +34,14 @@ body {
     color: lightblue;
 }
 
+@media (max-width: 500px) {
+    .welcome h1 {
+        font-size: 2.9em;
+    }
+}
+
 .About{
     text-align: center;
-    margin-top: 50px;
 }
 
 #One{
@@ -57,7 +62,7 @@ body {
 .warning{
     color: darkgoldenrod;
     text-align: center;
-    margin-top: 200px;
+    margin-top: 15%;
 }
 
 /* Changes color of cardsearch background on each card*/
