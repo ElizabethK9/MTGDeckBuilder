@@ -73,11 +73,11 @@ body {
     }
 }
 
-
-
 /* Changes color of cardsearch background on each card*/
 .card {
     background-color: #0d2a36 !important;
+    width: 13rem;
+    margin-bottom: 1rem;
 }
 
 .centered-container {

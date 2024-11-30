@@ -34,13 +34,13 @@
     @foreach (DeckCard card in Model.DeckCards)
     {
         <li>
-            <div class="card" style="width: 18rem; margin: 1rem; text-align:center">
+            <div class="card">
                 <img src="@card.GameCard.ImageURL" class="card-img-top" alt="@card.GameCard.Name @card.GameCard.Set">
                 <div class="card-body">
                     <h5 class="card-title">@card.GameCard.Name X @card.Quantity</h5>
                     <div class="d-flex justify-content-between">
                         <form method="post" asp-action="AddCardToDeck" asp-route-deckId="@Model.Id" asp-route-cardId="@card.GameCard.MID">
-                            <button class="btn btn-primary w-48" type="submit">Add to Deck</button>
+                            <button class="btn btn-primary w-48" type="submit">Add</button>
                         </form>
                         <form method="post" asp-action="RemoveCardFromDeck" asp-route-deckId="@Model.Id" asp-route-cardId="@card.GameCard.MID">
                             <button class="btn btn-danger w-48" type="submit">Remove</button>
